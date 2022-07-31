@@ -1,0 +1,41 @@
+.navbar{
+    position: relative;
+    padding: 1rem 2rem 1rem 2rem;
+    align-items: center;
+    justify-content: space-between;
+    background-color: azure;
+}
+
+div.brand{
+    color: teal;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+div.nav-items{
+    display: flex;
+}
+
+div.nav-items div{
+    padding-left: 1rem;
+}
+
+
+.navbar div{
+    padding-right: 1rem;
+}
+
+.navbar div a{
+    text-decoration: none;
+    cursor: pointer;
+    color: #202020;
+    font-weight: 600;
+}
+
+.navbar a.active{
+    color: teal;
+}
+
+.navbar div a:hover{
+    color:teal;
+}
