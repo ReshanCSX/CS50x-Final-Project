@@ -8,7 +8,7 @@
 .navbar .brand {
   color: #2980b9;
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 .navbar .nav-items {
   display: flex;
@@ -41,4 +41,27 @@
 }
 .navbar .nav-items div .active {
   color: #2980b9;
+}
+
+.login-form {
+  border: 1px solid #bdc3c7;
+  border-radius: 10px;
+  width: 450px;
+  padding: 1rem 3rem;
+  margin: 0rem 3rem;
+}
+.login-form h1 {
+  font-weight: 600;
+}
+.login-form .form-button {
+  background-color: #2980b9;
+  color: #FFF;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  padding: 0.7rem 0rem;
+}
+.login-form .form-button:hover {
+  background-color: #3498db;
 }/*# sourceMappingURL=styles.css.map */
