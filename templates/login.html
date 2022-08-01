@@ -3,13 +3,26 @@
 {% block title %} Login {% endblock %}
 
 {% block main %}
-    <form action="/login" method="post">
-        <div class="mb-3">
-            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="username" name="username" placeholder="Username" type="text">
+
+        <div class="login-form">
+            <h3 class="my-4">Sign in</h3>
+                <form action="/login" method="post">
+                    <div class="form-floating mb-4">
+                        <input type="text" class="form-control" id="floatingInput" name="username" placeholder="username">
+                        <label for="floatingInput">Username</label>
+                    </div>
+
+                    <div class="form-floating mb-4 m-auto">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+
+                    <button class="form-button" type="submit">Log in</button>
+                </form>
+
+                <div class="my-3">
+                    <span>Don't have an account? </span><a href="/signup">Sign up</a>
+                </div>
+
         </div>
-        <div class="mb-3">
-            <input class="form-control mx-auto w-auto" id="password" name="password" placeholder="Password" type="password">
-        </div>
-        <button class="btn btn-primary" type="submit">Log In</button>
-    </form>
 {% endblock %}
