@@ -1,0 +1,29 @@
+.navbar {
+  display: flex;
+  padding: 1rem 4rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar .brand {
+  color: #008080;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.navbar .nav-items {
+  display: flex;
+}
+.navbar .nav-items div {
+  padding-left: 2rem;
+}
+.navbar .nav-items div a {
+  color: #202020;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.navbar .nav-items div a:hover {
+  color: #008080;
+}
+.navbar .nav-items div .active {
+  color: #008080;
+}/*# sourceMappingURL=styles.css.map */
