@@ -30,10 +30,22 @@
         </div>
       </nav>
 
-      <main class="container py-5 text-center d-flex justify-content-center">
-        {% block main %}
+      <main class="container py-4 text-center d-grid justify-content-center">
 
-        {% endblock %}
+        <div class="row">
+            {% with messages = get_flashed_messages("with categories=true") %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="d-block alert alert-{{category}}"> {{message}} </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+
+        <div class="row">
+          {% block main %}{% endblock %}
+        </div>
+
       </main>
     </body>
 </html>
