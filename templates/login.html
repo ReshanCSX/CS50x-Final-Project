@@ -1,25 +1,62 @@
-{% extends "layout.html"%}
+{% extends "layout.html" %}
 
 {% block main %}
+<div class="login-form">
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        
+        <fieldset class="form-group">
+            <legend class="border-bottom pb-2 mb-3 text-center">Login</legend>
 
-    <div class="login-form">
-        <h3 class="my-4">Sign in</h3>
-        <form action="/login" method="post">
-            <div class="form-floating mb-4">
-                <input type="text" class="form-control" id="floatingInput" name="username" placeholder="username" autofocus>
-                <label for="floatingInput">Username</label>
+            <div class="form-floating mb-3">
+                {% if form.email.errors %}
+                    {{ form.email(class="form-control is-invalid", id="floatingInput", placeholder="Email") }}
+                    {{ form.email.label(for="floatingInputInvalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.email(class="form-control", id="floatingInput", placeholder="Email") }}
+                    {{ form.email.label(for="floatingInput") }}
+                {% endif %}
             </div>
 
-            <div class="form-floating mb-4 m-auto">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
+            <div class="form-floating mb-3">
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control is-invalid", id="floatingPassword", placeholder="Password") }}
+                    {{ form.password.label(for="floatingPasswordInvalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{error}}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.password(class="form-control", id="floatingPassword", placeholder="Password") }}
+                    {{ form.password.label(for="floatingPassword") }}
+                {% endif %}
             </div>
 
-            <button class="form-button" type="submit">Log in</button>
-        </form>
+            <div class="form-check mb-3">
+                {{ form.remember(class="form-check-input") }}
+                {{ form.remember.label(class="form-check-label") }}
+            </div>
 
-        <div class="my-3">
-            <span>Don't have an account? </span><a href="/signup">Sign up</a>
+        </fieldset>
+
+        <div class="form-group mb-3">
+            {{ form.submit(class="form-button") }}
         </div>
+
+        <small class="text-muted">
+            <a href="#">Forgot Password?</a>
+        </small>
+    </form>
+
+    <div class="border-top pt-2 my-3 text-center">
+        <small class="text-muted">Need An Account? <a href="{{ url_for('signup') }}">Sign up</a></small>
     </div>
+</div>
+
 {% endblock %}

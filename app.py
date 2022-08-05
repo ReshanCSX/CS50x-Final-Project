@@ -23,17 +23,25 @@ def index():
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
-    return render_template("login.html")
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        # To test the validation process
+        if form.email.data == "reshan@gmail.com" and form.password.data == "1":
+            flash("Login successful!", "success")
+            return redirect(url_for("signup"))
+
+        else:
+            flash("Login unsuccessfull, Please check username and password", "danger")    
+
+    return render_template("login.html", title = "Login", form = form)
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
-
-    # Checking request method
-    # if request.method == "POST":
 
     form = RegistrationForm()
 
     if form.validate_on_submit():
         flash("Account Created", "success")
         return redirect(url_for('login'))
-    return render_template("register.html", title = "SPLIT: Sign Up", form = form)
+    return render_template("register.html", title = "Sign Up", form = form)

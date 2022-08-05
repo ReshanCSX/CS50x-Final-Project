@@ -10,7 +10,8 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField("Sign Up")
 
 class LoginForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
-    remember = BooleanField("Remember")
-    submit = SubmitField("Login")
+    remember = BooleanField("Remember Me")
+    submit = SubmitField("Log In")
 
