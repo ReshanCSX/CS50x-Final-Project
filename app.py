@@ -49,9 +49,4 @@ def signup():
 @app.route("/home", methods=["GET", "POST"])
 def home():
 
-    return render_template("home.html")
-
-@app.route("/overview")
-def overview():
-
     return render_template("overview.html")
