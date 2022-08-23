@@ -1,12 +1,12 @@
 .navbar {
   display: flex;
-  background-color: #FFF;
-  padding: 1rem 4rem;
+  background-color: rgb(255, 255, 255);
+  padding: 0.3rem 4rem;
   align-items: center;
   justify-content: space-between;
 }
 .navbar .brand {
-  color: #2980b9;
+  color: #3742FA;
   font-weight: 800;
   font-size: 2rem;
 }
@@ -25,21 +25,21 @@
   font-weight: 600;
 }
 .navbar .nav-items div a .nav-button {
-  background-color: #2980b9;
+  background-color: #0612df;
   color: #FFF;
   border: none;
   padding: 0.5rem 2rem 0.5rem 2rem;
   border-radius: 4rem;
 }
 .navbar .nav-items div a .nav-button:hover {
-  background-color: #3498db;
+  background-color: #3742FA;
   color: #FFF;
 }
 .navbar .nav-items div a:hover {
-  color: #2980b9;
+  color: #3742FA;
 }
 .navbar .nav-items div .active {
-  color: #2980b9;
+  color: #3742FA;
 }
 
 .login-form {
@@ -52,7 +52,7 @@
   font-weight: 600;
 }
 .login-form .form-button {
-  background-color: #2980b9;
+  background-color: #0612df;
   color: #FFF;
   font-weight: 600;
   border: none;
@@ -61,5 +61,5 @@
   padding: 0.7rem 0rem;
 }
 .login-form .form-button:hover {
-  background-color: #3498db;
+  background-color: #3742FA;
 }/*# sourceMappingURL=styles.css.map */
