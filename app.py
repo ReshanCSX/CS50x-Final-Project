@@ -18,7 +18,7 @@ db = SQL("sqlite:///")
 @app.route("/")
 def index():
     
-    return render_template("index.html")
+    return render_template("index.html", title="SPLIT")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -29,7 +29,7 @@ def login():
         # To test the validation process
         if form.email.data == "reshan@gmail.com" and form.password.data == "1":
             flash("Login successful!", "success")
-            return redirect(url_for("signup"))
+            return redirect(url_for("home"))
 
         else:
             flash("Login unsuccessfull, Please check username and password", "danger")    
@@ -45,3 +45,13 @@ def signup():
         flash("Account Created", "success")
         return redirect(url_for('login'))
     return render_template("register.html", title = "Sign Up", form = form)
+
+@app.route("/home", methods=["GET", "POST"])
+def home():
+
+    return render_template("home.html")
+
+@app.route("/overview")
+def overview():
+
+    return render_template("overview.html")

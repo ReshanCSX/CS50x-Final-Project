@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- bootstrap links -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        
+        <link href="/static/dashboard_styles.css" rel="stylesheet">
+
+        <title>{{title}}</title>
+        
+    </head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 navigation">
+                <nav>
+                    <div class="brand">SPLIT</div>
+
+                    <ul class="nav_items">
+                        <li class="nav_item">
+                            <a href="{{ url_for('overview') }}" class="{{ 'active' if active_page == 'overview'}}" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgb(255, 255, 255);"><path d="m21.743 12.331-9-10c-.379-.422-1.107-.422-1.486 0l-9 10a.998.998 0 0 0-.17 1.076c.16.361.518.593.913.593h2v7a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-4h4v4a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-7h2a.998.998 0 0 0 .743-1.669z"></path></svg>
+                                <span class="link_name">Overview</span>
+                            </a>
+                        </li>
+
+                        <li class="nav_item">
+                            <a href="#" class="{{ 'active' if active_page == 'recent' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgb(255, 255, 255);"><path d="m15 12 5-4-5-4v2.999H2v2h13zm7 3H9v-3l-5 4 5 4v-3h13z"></path></svg>
+                                <span class="link_name">Budget Expenses</span>
+                            </a>
+                        </li>
+
+                        <li class="nav_item">
+                            <a href="#" class="{{ 'active' if activate_page == 'share' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgb(255, 255, 255);"><path d="M11 6.914V2.586L6.293 7.293l-3.774 3.774 3.841 3.201L11 18.135V13.9c8.146-.614 11 4.1 11 4.1 0-2.937-.242-5.985-2.551-8.293C16.765 7.022 12.878 6.832 11 6.914z"></path></svg>
+                                <span class="link_name">Recent Transactions</span>
+                            </a>
+                        </li>
+
+                        <li class="nav_item">
+                            <a href="#" class="{{ 'active' if active_page == 'profile' }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgb(255, 255, 255);"><path d="M12 2C6.579 2 2 6.579 2 12s4.579 10 10 10 10-4.579 10-10S17.421 2 12 2zm0 5c1.727 0 3 1.272 3 3s-1.273 3-3 3c-1.726 0-3-1.272-3-3s1.274-3 3-3zm-5.106 9.772c.897-1.32 2.393-2.2 4.106-2.2h2c1.714 0 3.209.88 4.106 2.2C15.828 18.14 14.015 19 12 19s-3.828-.86-5.106-2.228z"></path></svg>
+                                <span class="link_name">Profile</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- <div class="nav_items">
+                        <div class="nav_item"><a href="#">Dashboard</a></div>
+                        <div class="nav_item"><a href="#">Recent Transactions</a></div>
+                        <div class="nav_item"><a href="#">Share</a></div>
+                        <div class="nav_item"><a href="#">Profile</a></div>
+                    </div> -->
+                </nav>
+            </div>
+
+            <div class="col-10 content-space">{% block main %} {% endblock %}</div>
+    </div>
+</body>
+</html>
