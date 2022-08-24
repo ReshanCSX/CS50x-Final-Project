@@ -24,9 +24,15 @@
         </div>
         <!-- navigation bar items -->
         <div class="nav-items">
-          <div><a href="/" aria-current="page" class="active">Home</a></div>
-          <div><a href="/login">Login</a></div>
-          <div><a href="/signup"><button class="nav-button">Sign up</button></a></div>
+          {% if session["userid"] %}
+          <div><a href="/" aria-current="page" class="active">Overview</a></div>
+          <div><a href="/" class="active">Budget</a></div>
+          <div><a href="/" class="active">Transactions</a></div>
+          {% else %}
+          <div><a href="/" aria-current="page" class="{{ 'active' if active_page == 'home' }}">Home</a></div>
+          <div><a href="/login" class="{{ 'active' if active_page == 'login' }}">Login</a></div>
+          <div><a href="/signup"><button class="nav-button {{ 'active' if active_page == 'signup' }}">Get Started</button></a></div>
+          {% endif %}
         </div>
       </nav>
 
