@@ -2,7 +2,7 @@
 {% set active_page = 'login' %}
 
 {% block main %}
-<div class="login-form">
+<div class="login-form mt-3">
     <form action="" method="post">
         {{ form.hidden_tag() }}
         
@@ -56,7 +56,7 @@
     </form>
 
     <div class="border-top pt-2 my-3 text-center">
-        <small class="text-muted">Need An Account? <a href="{{ url_for('signup') }}">Sign up</a></small>
+        <small class="text-muted"><span class="me-2">Need An Account?</span><a href="{{ url_for('signup') }}">Sign up</a></small>
     </div>
 </div>
 
