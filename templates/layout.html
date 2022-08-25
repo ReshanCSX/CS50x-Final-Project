@@ -10,31 +10,51 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
         
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+
         <link href="/static/styles.css" rel="stylesheet">
 
-        <title>{{title}}</title>
+        {% if title %}
+          <title>SPLIT - {{ title }}</title>
+        {% else %}
+          <title>SPLIT</title>
+        {% endif %}
         
     </head>
     <body>
     <!-- Navigation bar -->
-      <nav class="navbar">
-        <!-- Logo -->
-        <div  class="brand">
-          <div>SPLIT</div>
-        </div>
-        <!-- navigation bar items -->
-        <div class="nav-items">
-          {% if session["userid"] %}
-          <div><a href="/" aria-current="page" class="active">Overview</a></div>
-          <div><a href="/" class="active">Budget</a></div>
-          <div><a href="/" class="active">Transactions</a></div>
-          {% else %}
-          <div><a href="/" aria-current="page" class="{{ 'active' if active_page == 'home' }}">Home</a></div>
-          <div><a href="/login" class="{{ 'active' if active_page == 'login' }}">Login</a></div>
-          <div><a href="/signup"><button class="nav-button {{ 'active' if active_page == 'signup' }}">Get Started</button></a></div>
-          {% endif %}
-        </div>
-      </nav>
+      <header>
+        <nav class="navbar">
+          <div class="container-fluid py-0 my-0">
+            <div class="brand"><a href="/">SPLIT</a></div>
+
+            {% if session["user_id"] %}
+            <div class="logged-menu">
+              <ul class="nav-items">
+                <li class="nav-item"><a href="{{ url_for('home') }}" class="{{ 'active' if active_page == 'overview' }}">Overview</a></li>
+                <li class="nav-item"><a href="#" class="{{ 'active' if active_page == 'budget' }}">Budget</a></li>
+                <li class="nav-item"><a href="#" class="{{ 'active' if active_page == 'transactions' }}">Transactions</a></li>
+              </ul>
+            </div>
+
+            <div class="navbar-items">
+              <ul class="nav-items">
+                <li class="nav-item"><a href="{{ url_for('login')}}" class="{{ 'active' if active_page == 'login' }}">Profile</a></li>
+              </ul>
+            </div>
+
+            {% else %}
+            <div class="navbar-items">
+              <ul class="nav-items">
+                <li class="nav-item"><a href="{{ url_for('login')}}" class="{{ 'active' if active_page == 'login' }}">Sign in</a></li>
+              </ul>
+            </div>
+            {% endif %}
+          </div>
+        </nav>
+      </header>
 
       <main class="container-fluid py-4 d-grid justify-content-center">
 
