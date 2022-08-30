@@ -13,7 +13,7 @@
                     {{ form.username(class="form-control is-invalid", id="floatingInput", placeholder="Username") }}
                     {{ form.username.label(for="floatingInputInvalid") }}
                     <div class="invalid-feedback">
-                        {% for error in forms.username.errors %}
+                        {% for error in form.username.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
