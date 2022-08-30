@@ -3,7 +3,7 @@ from financeapp import app, db
 from financeapp.models import User, Account, Transactions
 from financeapp.forms import RegistrationForm, LoginForm
 from werkzeug.security import check_password_hash, generate_password_hash
-from flask_login import login_user, current_user, login_required
+from flask_login import login_user, current_user, login_required, logout_user
 
 @app.route("/")
 def index():
@@ -60,6 +60,12 @@ def signup():
         return redirect(url_for('login'))
 
     return render_template("register.html", title = "Sign Up", form = form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect("/")
+
 
 @app.route("/home", methods=["GET", "POST"])
 @login_required
