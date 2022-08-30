@@ -14,7 +14,7 @@
                     {{ form.username.label(for="floatingInputInvalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.username.errors %}
-                            <span>{{ error }}</span>
+                            <span><small> {{ error }} </small></span>
                         {% endfor %}
                     </div>
                 {% else %}
@@ -29,7 +29,7 @@
                     {{ form.email.label(for="floatingInputInvalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.email.errors %}
-                            <span>{{error}}</span>
+                            <span><small> {{ error }} </small></span>
                         {% endfor %}
                     </div>
                 {% else %}
@@ -44,7 +44,7 @@
                     {{ form.password.label(for="floatingPasswordInvalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.password.errors %}
-                            <span>{{error}}</span>
+                            <span><small> {{ error }} </small></span>
                         {% endfor %}
                     </div>
                 {% else %}
@@ -60,7 +60,7 @@
                     {{ form.confirmation.label(for="floatingPasswordInvalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.confirmation.errors %}
-                            <span>{{error}}</span>
+                            <span><small> {{ error }} </small></span>
                         {% endfor %}
                     </div>
                 {% else %}
