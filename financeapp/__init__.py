@@ -1,10 +1,6 @@
-from flask import Flask, redirect, render_template, request, url_for, flash, session
+from flask import Flask
 from flask_session import Session
-from flask_sqlalchemy import SQLAlchemy 
-
-
-from werkzeug.security import check_password_hash, generate_password_hash
-
+from flask_sqlalchemy import SQLAlchemy
 
 #app configuration
 app = Flask(__name__)

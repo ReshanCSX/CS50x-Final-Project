@@ -1,7 +1,8 @@
-from flask import redirect, render_template, request, url_for, flash, session
-from financeapp import app
+from flask import redirect, render_template, url_for, flash, session
+from financeapp import app, db
 from financeapp.models import User, Account, Transactions
 from financeapp.forms import RegistrationForm, LoginForm
+from werkzeug.security import check_password_hash, generate_password_hash
 
 @app.route("/")
 def index():
@@ -30,8 +31,18 @@ def signup():
     form = RegistrationForm()
 
     if form.validate_on_submit():
-        flash("Account Created", "success")
+        
+        # Password Hashing
+        hashed_password = generate_password_hash(form.password.data)
+
+        # Create database instance
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+
+        flash("Your account has been created", "success")
         return redirect(url_for('login'))
+
     return render_template("register.html", title = "Sign Up", form = form)
 
 @app.route("/home", methods=["GET", "POST"])
