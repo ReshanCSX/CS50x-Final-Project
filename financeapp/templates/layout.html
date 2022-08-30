@@ -30,7 +30,7 @@
           <div class="container-fluid py-0 my-0">
             <div class="brand"><a href="/">SPLIT</a></div>
 
-            {% if session["user_id"] %}
+            {% if current_user.is_authenticated %}
             <div class="logged-menu">
               <ul class="nav-items">
                 <li class="nav-item"><a href="{{ url_for('home') }}" class="{{ 'active' if active_page == 'overview' }}">Overview</a></li>
@@ -42,6 +42,7 @@
             <div class="navbar-items">
               <ul class="nav-items">
                 <li class="nav-item"><a href="{{ url_for('login')}}" class="{{ 'active' if active_page == 'login' }}">Profile</a></li>
+                <li class="nav-item"><a href="{{ url_for('login')}}" class="{{ 'active' if active_page == 'login' }}">Logout</a></li>
               </ul>
             </div>
 
