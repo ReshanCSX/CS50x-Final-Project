@@ -66,7 +66,6 @@ def logout():
     logout_user()
     return redirect("/")
 
-
 @app.route("/home", methods=["GET", "POST"])
 @login_required
 def home():

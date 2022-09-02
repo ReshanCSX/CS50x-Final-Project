@@ -1,46 +1,122 @@
-body {
-  font-family: "Montserrat", sans-serif;
-}
-
-nav {
-  padding: 0rem 2rem !important;
-  background-color: #FFF;
-  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
-}
-nav .brand a {
-  color: #5B58EC;
-  text-decoration: none;
-  font-weight: 800;
-  font-size: 1.5rem;
-}
-nav .logged-menu .nav-items .nav-item {
-  margin: 0rem 1rem;
-}
-nav .nav-items {
-  list-style: none;
+* {
+  box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
-nav .nav-items .nav-item {
-  display: inline-flex;
+
+html {
+  scroll-behavior: smooth;
+  font-size: text_size(normal);
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+header {
+  background-color: #5B58EC;
+  width: 100%;
+  transition: 0.4s;
+}
+header .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+header .navbar .nav_logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+header .navbar .nav_logo a {
+  color: #FFFFFF;
+}
+header .navbar .nav_menu {
+  padding-left: 3rem;
+  display: flex;
   align-items: center;
 }
-nav .nav-items .nav-item .active {
-  border-bottom: 5px solid #5B58EC;
-  color: #5B58EC;
+header .navbar .nav_menu .nav_list, header .navbar .nav_menu .nav_item {
+  display: flex;
 }
-nav .nav-items .nav-item a {
-  text-decoration: none;
-  color: #102A57;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 1rem;
-  border-bottom: 5px solid transparent;
+header .navbar .nav_menu .nav_list {
+  justify-content: center;
+  align-items: center;
+  -moz-column-gap: 3rem;
+       column-gap: 3rem;
 }
-nav .nav-items .nav-item a:hover {
-  color: #5B58EC;
-  transition: 0.3s;
-  border-bottom: 5px solid #5B58EC;
+header .navbar .nav_menu .nav_list .nav_item {
+  position: relative;
+  flex-direction: column;
+  row-gap: 4px;
+}
+header .navbar .nav_menu .nav_list .nav_item a {
+  color: #FFFFFF;
+}
+header .navbar .nav_menu .nav_list .nav_item .active::before {
+  content: "";
+  position: absolute;
+  bottom: -0.5rem;
+  width: 100%;
+  height: 4px;
+  background-color: #FFF;
+  opacity: 100%;
+  border-radius: 1rem;
+}
+header .navbar .nav_menu .nav_list .nav_item:hover {
+  opacity: 80%;
+}
+
+@media only screen and (max-width: 330px) {
+  body {
+    font-size: 0.75rem;
+  }
+  .nav_list {
+    -moz-column-gap: 2rem !important;
+         column-gap: 2rem !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  .bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #5B58EC;
+    width: 100%;
+    padding-left: 0 !important;
+    margin: 0;
+    height: 4rem;
+    display: grid;
+    justify-content: center;
+    border-radius: 1.25rem 1.25rem 0 0;
+    transition: 0.4s;
+  }
+  .active::before {
+    content: "";
+    position: absolute;
+    bottom: -0.5rem;
+    width: 4px !important;
+    left: 50%;
+    height: 4px;
+    background-color: #FFF;
+    opacity: 100%;
+    border-radius: 1rem;
+  }
+}
+.main_container {
+  margin-top: 4.5rem;
 }
 
 .login-form {
@@ -49,13 +125,9 @@ nav .nav-items .nav-item a:hover {
   width: 450px;
   padding: 1rem 3rem;
 }
-.login-form h1 {
-  font-weight: 600;
-}
 .login-form .form-button {
   background-color: #5B58EC;
   color: #FFF;
-  font-weight: 600;
   border: none;
   border-radius: 5px;
   width: 100%;

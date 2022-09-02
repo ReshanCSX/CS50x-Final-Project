@@ -9,11 +9,10 @@
         <!-- bootstrap links -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        
+
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
-
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
         <link href="/static/styles.css" rel="stylesheet">
 
         {% if title %}
@@ -27,49 +26,52 @@
     <!-- Navigation bar -->
       <header>
         <nav class="navbar">
-          <div class="container-fluid py-0 my-0">
-            <div class="brand"><a href="/">SPLIT</a></div>
-
-            {% if current_user.is_authenticated %}
-            <div class="logged-menu">
-              <ul class="nav-items">
-                <li class="nav-item"><a href="{{ url_for('home') }}" class="{{ 'active' if active_page == 'overview' }}">Overview</a></li>
-                <li class="nav-item"><a href="#" class="{{ 'active' if active_page == 'budget' }}">Budget</a></li>
-                <li class="nav-item"><a href="#" class="{{ 'active' if active_page == 'transactions' }}">Transactions</a></li>
-              </ul>
-            </div>
-
-            <div class="navbar-items">
-              <ul class="nav-items">
-                <li class="nav-item"><a href="{{ url_for('login')}}" class="{{ 'active' if active_page == 'login' }}">Profile</a></li>
-                <li class="nav-item"><a href="{{ url_for('logout')}}">Logout</a></li>
-              </ul>
-            </div>
-
-            {% else %}
-            <div class="navbar-items">
-              <ul class="nav-items">
-                <li class="nav-item"><a href="{{ url_for('login')}}" class="{{ 'active' if active_page == 'login' }}">Sign in</a></li>
-                <li class="nav-item"><a href="{{ url_for('signup')}}" class="{{ 'active' if active_page == 'signup' }}">Sign up free</a></li>
-              </ul>
-            </div>
-            {% endif %}
+          <div class="nav_logo"><a href="/">SPLIT</a></div>
+          {% if current_user.is_authenticated %}
+          <div class="nav_menu bottom me-auto">
+            <ul class="nav_list">
+              <li class="nav_item"><a href="{{ url_for('home') }}" class="all {{ 'active' if active_page == 'overview' }}">Overview</a></li>
+              <li class="nav_item"><a href="#" class="all {{ 'active' if active_page == 'budget' }}">Budget</a></li>
+              <li class="nav_item"><a href="#" class="all {{ 'active' if active_page == 'transactions' }}">Transactions</a></li>
+            </ul>
           </div>
+
+          <div class="nav_menu top">
+            <ul class="nav_list">
+              <li class="nav_item"><a href="{{ url_for('login')}}" class="{{ 'active' if active_page == 'login' }}">Profile</a></li>
+              <li class="nav_item"><a href="{{ url_for('logout')}}">Logout</a></li>
+            </ul>
+          </div>
+
+          {% else %}
+          <div class="nav_menu">
+            <ul class="nav_list">
+              <li class="nav_item"><a href="{{ url_for('login')}}" class="{{ 'active' if active_page == 'login' }}">Sign in</a></li>
+              <li class="nav_item"><a href="{{ url_for('signup')}}" class="{{ 'active' if active_page == 'signup' }}">Sign up free</a></li>
+            </ul>
+          </div>
+          {% endif %}
         </nav>
       </header>
 
-      <main class="container-fluid py-4 d-grid justify-content-center">
-
+      <!-- Flash messages -->
+      {% with messages = get_flashed_messages("with categories=true") %}
+        {% if messages %}
+          {% set margin = 'no' %}
+          {% for category, message in messages %}
+      <div class="container-fluid text-center pt-3">
         <div class="row">
-            {% with messages = get_flashed_messages("with categories=true") %}
-            {% if messages %}
-              {% for category, message in messages %}
-                <div class="d-block alert alert-{{category}} text-center"> {{message}} </div>
-              {% endfor %}
-            {% endif %}
-          {% endwith %}
+          <div class="col">
+              <div class="alert alert-{{category}} mb-0"> {{message}} </div>
+          </div>
         </div>
+      </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
 
+      <!-- Content -->
+      <main class="container-fluid d-grid justify-content-center pt-2">
         <div class="row">
           {% block main %}{% endblock %}
         </div>
