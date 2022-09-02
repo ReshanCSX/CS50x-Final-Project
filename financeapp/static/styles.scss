@@ -51,6 +51,7 @@ a {
 text-decoration: none;
 }
 
+// Navigation styles
 header{
     background-color: $primary-color;
     width: 100%;
@@ -116,7 +117,7 @@ header{
     }
 }
 
-
+// Media qearies
 @media only screen and (max-width: 330px) {
     body{
         font-size: 0.75rem;
@@ -156,75 +157,12 @@ header{
     }
   }
 
-
-
-
-
-
+// Main container
 .main_container{
     margin-top: 4.5rem;
 }
 
-// nav{
-//     padding: 0rem 2rem !important;
-//     background-color: $complementary-color;
-//     -webkit-box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.1);
-//     -moz-box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.1);
-//     box-shadow: 0px 2px 8px 0px rgba(0,0,0,0.1);
-    
-//     .brand{
-
-//         a{
-//             color:$primary-color;
-//             text-decoration: none;
-//             font-weight: f_weight(bold);
-//             font-size: f_size(medium);
-//         }
-//     }
-
-//     .logged-menu{
-
-//         .nav-items{
-//             .nav-item{
-//                 margin: 0rem 1rem;
-//             }
-//         }
-//     }
-
-//     .nav-items{
-//         list-style: none;
-//         padding: 0;
-//         margin: 0;
-
-//         .nav-item{
-//             display: inline-flex;
-//             align-items: center;
-
-
-//             .active{
-//                 border-bottom: 5px solid $primary-color;
-//                 color: $primary-color;
-//             }
-
-//             a{
-//                 text-decoration: none;
-//                 color: $accent-color-1;
-//                 font-size: f_size(regular);
-//                 font-weight: f_weight(medium);
-//                 padding: 1rem;
-//                 border-bottom: 5px solid transparent;
-
-
-//                 &:hover{
-//                     color:$primary-color;
-//                     transition: 0.3s;
-//                     border-bottom: 5px solid $primary-color;
-//                 }
-//             }
-//         }
-//     }
-// }
-
+// forms
 
 .login-form{
     border: 1px solid #dee2e6;
