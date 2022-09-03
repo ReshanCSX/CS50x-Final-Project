@@ -32,7 +32,7 @@
             <ul class="nav_list">
               <li class="nav_item"><a href="{{ url_for('home') }}" class="all {{ 'active' if active_page == 'overview' }}">Overview</a></li>
               <li class="nav_item"><a href="#" class="all {{ 'active' if active_page == 'budget' }}">Budget</a></li>
-              <li class="nav_item"><a href="#" class="all {{ 'active' if active_page == 'transactions' }}">Transactions</a></li>
+              <li class="nav_item"><a href="{{ url_for('transactions') }}" class="all {{ 'active' if active_page == 'transactions' }}">Transactions</a></li>
             </ul>
           </div>
 
@@ -71,7 +71,7 @@
       {% endwith %}
 
       <!-- Content -->
-      <main class="container-fluid d-grid justify-content-center pt-2">
+      <main class="container-fluid d-grid pt-2">
         <div class="row">
           {% block main %}{% endblock %}
         </div>

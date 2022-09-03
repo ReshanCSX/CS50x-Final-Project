@@ -2,62 +2,63 @@
 {% set active_page = 'login' %}
 
 {% block main %}
-<div class="login-form mt-3">
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        
-        <fieldset class="form-group">
-            <legend class="border-bottom pb-2 mb-3 text-center">Login</legend>
-
-            <div class="form-floating mb-3">
-                {% if form.email.errors %}
-                    {{ form.email(class="form-control is-invalid", id="floatingInput", placeholder="Email") }}
-                    {{ form.email.label(for="floatingInputInvalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.email.errors %}
-                            <span>{{error}}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.email(class="form-control", id="floatingInput", placeholder="Email") }}
-                    {{ form.email.label(for="floatingInput") }}
-                {% endif %}
+<div class="col d-flex justify-content-center">
+    <div class="login-form mt-3">
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            
+            <fieldset class="form-group">
+                <legend class="border-bottom pb-2 mb-3 text-center">Login</legend>
+    
+                <div class="form-floating mb-3">
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control is-invalid", id="floatingInput", placeholder="Email") }}
+                        {{ form.email.label(for="floatingInputInvalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control", id="floatingInput", placeholder="Email") }}
+                        {{ form.email.label(for="floatingInput") }}
+                    {% endif %}
+                </div>
+    
+                <div class="form-floating mb-3">
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control is-invalid", id="floatingPassword", placeholder="Password") }}
+                        {{ form.password.label(for="floatingPasswordInvalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control", id="floatingPassword", placeholder="Password") }}
+                        {{ form.password.label(for="floatingPassword") }}
+                    {% endif %}
+                </div>
+    
+                <div class="form-check mb-3">
+                    {{ form.remember(class="form-check-input") }}
+                    {{ form.remember.label(class="form-check-label") }}
+                </div>
+    
+            </fieldset>
+    
+            <div class="form-group mb-3">
+                {{ form.submit(class="form-button") }}
             </div>
-
-            <div class="form-floating mb-3">
-                {% if form.password.errors %}
-                    {{ form.password(class="form-control is-invalid", id="floatingPassword", placeholder="Password") }}
-                    {{ form.password.label(for="floatingPasswordInvalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.password.errors %}
-                            <span>{{error}}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.password(class="form-control", id="floatingPassword", placeholder="Password") }}
-                    {{ form.password.label(for="floatingPassword") }}
-                {% endif %}
-            </div>
-
-            <div class="form-check mb-3">
-                {{ form.remember(class="form-check-input") }}
-                {{ form.remember.label(class="form-check-label") }}
-            </div>
-
-        </fieldset>
-
-        <div class="form-group mb-3">
-            {{ form.submit(class="form-button") }}
+    
+            <small class="text-muted">
+                <a href="#">Forgot Password?</a>
+            </small>
+        </form>
+    
+        <div class="border-top pt-2 my-3 text-center">
+            <small class="text-muted"><span class="me-2">Need An Account?</span><a href="{{ url_for('signup') }}">Sign up</a></small>
         </div>
-
-        <small class="text-muted">
-            <a href="#">Forgot Password?</a>
-        </small>
-    </form>
-
-    <div class="border-top pt-2 my-3 text-center">
-        <small class="text-muted"><span class="me-2">Need An Account?</span><a href="{{ url_for('signup') }}">Sign up</a></small>
     </div>
 </div>
-
 {% endblock %}
