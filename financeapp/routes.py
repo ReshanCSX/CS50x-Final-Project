@@ -1,7 +1,7 @@
 from flask import redirect, render_template, url_for, flash, request
 from financeapp import app, db
 from financeapp.models import User, Account, Transactions
-from financeapp.forms import RegistrationForm, LoginForm
+from financeapp.forms import RegistrationForm, LoginForm, TransactionForm
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_user, current_user, login_required, logout_user
 
@@ -70,5 +70,17 @@ def logout():
 @login_required
 def home():
 
-    return render_template("overview.html", title = "Overview",)
+    return render_template("overview.html", title = "Overview")
 
+@app.route("/transactions", methods=["GET", "POST"])
+@login_required
+def transactions():
+    form = TransactionForm()
+
+    if form.validate_on_submit():
+        transaction = Transactions()
+        flash("Record Added Successfully", "success")
+        return redirect(url_for('transactions'))
+
+
+    return render_template("transactions.html", title="Transactions", form = form)
