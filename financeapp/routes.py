@@ -91,3 +91,13 @@ def transactions():
 
 
     return render_template("transactions.html", title="Transactions", form = form, user_transactions = user_transactions)
+
+@app.route("/transactions/delete/<int:id>", methods=["GET", "POST"])
+@login_required
+
+def del_transactions(id):
+    del_trasaction = Transactions.query.get_or_404(id)
+    db.session.delete(del_trasaction)
+    db.session.commit()
+    flash("Record Deleted", "danger")
+    return redirect(url_for('transactions'))

@@ -162,14 +162,6 @@ header .navbar .nav_menu .nav_list .nav_item:hover {
   bottom: 5rem;
 }
 
-select:hover {
-  background-color: #4285f4 !important;
-}
-
-option:hover {
-  background-color: #4285f4 !important;
-}
-
 #FloatingAmount, #FloatingAmountInvalid {
   font-size: 1.5rem;
   font-weight: 700;

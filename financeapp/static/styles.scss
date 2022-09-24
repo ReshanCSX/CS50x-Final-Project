@@ -230,29 +230,13 @@ header{
     bottom: 5rem;
 }
 
-select:hover {
-    background-color: #4285f4 !important;}
-
-option:hover{
-    background-color: #4285f4 !important;
-}
-
-select.select_menu option:hover {
-    // box-shadow: 0 0 10px 100px #1882A8 inset !important;
-    // background: #000 !important;
-  }
-
-
-// select option:focus {
-//     background-color: red !important;
-//     color: white!important;
-// }
-
 #FloatingAmount, #FloatingAmountInvalid{
     font-size: f_size(medium);
     font-weight: f_weight(bold);
 }
 
-.transaction_form{
-    border: 1px solid $accent-color-1;
-}
+// .transaction_form{
+//     border: 1px solid $accent-color-1;
+//     border-radius: 10px;
+//     padding: 1rem;
+// }
