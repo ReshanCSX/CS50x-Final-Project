@@ -3,154 +3,100 @@
 
 {% block main %}
 
-<div class="col d-flex justify-content-center transactions_button">
-        <form action="" method="post">
-            {{ form.hidden_tag() }}
-            
-            <button type="button" class="btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              <span class="me-2 d-inline justify-content-center align-items-center"> 
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                </svg>
-              </span>
-              <span class="d-inline justify-content-center align-items-center"><small>New Transation</small></span>
-            </button>
+<div class="col-md-10 mx-auto mt-4">
+  <form class="transaction_form" action="" method="post">
+    {{ form.hidden_tag() }}
 
-            <div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title my-2" id="staticBackdropLabel">New Transaction</h5>
-                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      
-                      <div>
-                        <form action="" method="post">
-                            {{ form.hidden_tag() }}
+    <div class="row mb-3">
 
-                            <div class="row mb-3">
-                              <div class="col-md">
-                                <div class="form-floating">
-                                  {% if form.type.errors %}
-                                      {{ form.type(class="form-select is-invalid", id="FloatingTypeInvalid", placeholder="Username") }}
-                                      {{ form.type.label(for="FloatingTypeInvalid") }}
-                                      <div class="invalid-feedback">
-                                          {% for error in form.type.errors %}
-                                              <span><small> {{ error }} </small></span>
-                                          {% endfor %}
-                                      </div>
-                                  {% else %}
-                                      {{ form.type(class="form-select", id="FloatingType", placeholder="type") }}
-                                      {{ form.type.label(for="FloatingType") }}
-                                  {% endif %}
-                                </div>
-                              </div>
-                            </div>
-
-                          <div class="row mb-3">
-                            <div class="col-md-8">
-                              <div class="form-floating">
-                                {% if form.amount.errors %}
-                                    {{ form.amount(class="form-control is-invalid", id="FloatingAmountInvalid", placeholder="Username") }}
-                                    {{ form.amount.label(for="FloatingAmountInvalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.amount.errors %}
-                                            <span><small> {{ error }} </small></span>
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
-                                    {{ form.amount(class="form-control", id="FloatingAmount", placeholder="Amount") }}
-                                    {{ form.amount.label(for="FloatingAmount") }}
-                                {% endif %}
-                            </div>
-                            </div>
-
-                            <div class="col-md-4">
-                              <div class="form-floating">
-                                {% if form.currencies.errors %}
-                                    {{ form.currencies(class="form-select is-invalid", id="FloatingCurrencyInvalid", placeholder="Currency") }}
-                                    {{ form.currencies.label(for="FloatingCurrencyInvalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.currencies.errors %}
-                                            <span><small> {{ error }} </small></span>
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
-                                    {{ form.currencies(class="form-select", id="FloatingCurrency", placeholder="Currency") }}
-                                    {{ form.currencies.label(for="FloatingCurrency") }}
-                                {% endif %}
-                              </div>
-                            </div>
-                          </div>
-                            
-                          <div class="row mb-3">
-                            <div class="col-md-6">
-                              <div class="form-floating">
-                                {% if form.category.errors %}
-                                    {{ form.category(class="form-select is-invalid", id="FloatingCategoryInvalid") }}
-                                    {{ form.category.label(for="FloatingCategoryInvalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.category.errors %}
-                                            <span><small> {{ error }} </small></span>
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
-                                    {{ form.category(class="form-select", id="FloatingCategory" ) }}
-                                    {{ form.category.label(for="FloatingCategory") }}
-                                {% endif %}
-                              </div>
-                            </div>
-
-                            <div class="col-md-6">
-                              <div class="form-floating">
-                                {% if form.label.errors %}
-                                    {{ form.label(class="form-control is-invalid", id="FloatingLabelInvalid", placeholder="Note") }}
-                                    {{ form.label.label(for="FloatingLabelInvalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.label.errors %}
-                                            <span><small> {{ error }} </small></span>
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
-                                    {{ form.label(class="form-control", id="FloatingLabel", placeholder="Note") }}
-                                    {{ form.label.label(for="FloatingLabel") }}
-                                {% endif %}
-                              </div>
-                            </div>
-                          </div>
-
-                          <div class="row">
-                            <div class="col-md">
-                              <div class="form-floating">
-                                {% if form.date.errors %}
-                                    {{ form.date(class="form-control is-invalid", id="FloatingDateInvalid", placeholder="Date and Time") }}
-                                    {{ form.date.label(for="FloatingDateInvalid") }}
-                                    <div class="invalid-feedback">
-                                        {% for error in form.date.errors %}
-                                            <span><small> {{ error }} </small></span>
-                                        {% endfor %}
-                                    </div>
-                                {% else %}
-                                    {{ form.date(class="form-control", id="FloatingDate", placeholder="Date and Time") }}
-                                    {{ form.date.label(for="FloatingDate") }}
-                                {% endif %}
-                              </div>
-                            </div>
-                          </div>
-                          
-
-                        </form>
-                      </div>
-
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      {{ form.submit(class="btn btn-primary") }}
-                    </div>
-                  </div>
-                </div>
+      <div class="col-md-3 mb-2">
+        <div class="form-floating">
+          {% if form.type.errors %}
+              {{ form.type(class="form-select select_menu is-invalid", id="FloatingTypeInvalid", placeholder="Username") }}
+              {{ form.type.label(for="FloatingTypeInvalid") }}
+              <div class="invalid-feedback">
+                  {% for error in form.type.errors %}
+                      <span><small> {{ error }} </small></span>
+                  {% endfor %}
               </div>
+          {% else %}
+              {{ form.type(class="form-select select_menu", id="FloatingType", placeholder="type") }}
+              {{ form.type.label(for="FloatingType") }}
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-md-5 mb-2">
+        <div class="form-floating">
+          {% if form.label.errors %}
+              {{ form.label(class="form-control is-invalid", id="FloatingLabelInvalid", placeholder="Note") }}
+              {{ form.label.label(for="FloatingLabelInvalid") }}
+              <div class="invalid-feedback">
+                  {% for error in form.label.errors %}
+                      <span><small> {{ error }} </small></span>
+                  {% endfor %}
+              </div>
+          {% else %}
+              {{ form.label(class="form-control", id="FloatingLabel", placeholder="Note") }}
+              {{ form.label.label(for="FloatingLabel") }}
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-2">
+        <div class="form-floating">
+          {% if form.amount.errors %}
+              {{ form.amount(class="form-control is-invalid", id="FloatingAmountInvalid", placeholder="Username") }}
+              {{ form.amount.label(for="FloatingAmountInvalid") }}
+              <div class="invalid-feedback">
+                  {% for error in form.amount.errors %}
+                      <span><small> {{ error }} </small></span>
+                  {% endfor %}
+              </div>
+          {% else %}
+              {{ form.amount(class="form-control", id="FloatingAmount", placeholder="Amount") }}
+              {{ form.amount.label(for="FloatingAmount") }}
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-md-1 d-grid mx-auto py-0 my-0  mb-2">
+          {{ form.submit(class="form_submit btn btn-primary d-block") }}
+      </div>
+
+    </div>
+
+
+  </form>
+
+
+  <div class="table-responsive-md mt-4">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Transaction</th>
+          <th>Type</th>
+          <th>Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for transaction in user_transactions %}
+        <tr>
+          <td>{{ transaction.transaction_name }}</td>
+          <td>{{ transaction.transaction_type }}</td>
+          <td>{{ transaction.amount }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>  
+    </table>
+</div>
+
+
+</div>
+
+
+
+
 
 {% endblock %}

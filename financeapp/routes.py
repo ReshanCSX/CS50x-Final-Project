@@ -77,10 +77,17 @@ def home():
 def transactions():
     form = TransactionForm()
 
+    user = User.query.filter_by(username=current_user.username).first()
+    user_transactions = Transactions.query.filter_by(user_id=user.id)
+
+
     if form.validate_on_submit():
-        transaction = Transactions()
+
+        transaction = Transactions(amount=int(form.amount.data), transaction_type=form.type.data, transaction_name=form.label.data, user_id=user.id)
+        db.session.add(transaction)
+        db.session.commit()
         flash("Record Added Successfully", "success")
         return redirect(url_for('transactions'))
 
 
-    return render_template("transactions.html", title="Transactions", form = form)
+    return render_template("transactions.html", title="Transactions", form = form, user_transactions = user_transactions)

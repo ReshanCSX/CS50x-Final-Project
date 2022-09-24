@@ -193,15 +193,32 @@ header{
 }
 
 // Bootstrap primary button color overwrite
-.btn-primary {
-    background-color: $primary-color !important;
-    border: 1px solid $primary-color !important;
+// .btn-primary {
+//     background-color: $primary-color !important;
+//     border: 1px solid $primary-color !important;
+//     width: 100%;
+//     height: 100%;
+//     padding: auto;
+//     margin: 0rem;
+// }
+
+.form_submit{
+    background-color: $accent-color-2 !important;
+    border: 1px solid $accent-color-2 !important;
+    width: 100%;
+    height: 100%;
+    padding: auto;
+    margin: 0rem;
 }
 
-.btn-primary:hover, .btn-primary:active, .btn-primary:visited{
-    background-color: $accent-color-1 !important;
-    background-color: $accent-color-1 !important;
+.form_submit:hover, .form_submit:active, .form_submit:visited{
+    opacity: 90%;
 }
+
+// .btn-primary:hover, .btn-primary:active, .btn-primary:visited{
+//     background-color: $accent-color-1 !important;
+//     background-color: $accent-color-1 !important;
+// }
 
 .modal-header{
     background-color: $primary-color;
@@ -213,22 +230,29 @@ header{
     bottom: 5rem;
 }
 
-select option:checked {
-    background-color: red !important;
-    color: white!important;
+select:hover {
+    background-color: #4285f4 !important;}
+
+option:hover{
+    background-color: #4285f4 !important;
+}
+
+select.select_menu option:hover {
+    // box-shadow: 0 0 10px 100px #1882A8 inset !important;
+    // background: #000 !important;
   }
 
-select option:hover {
-    background-color: red !important;
-    color: white!important;
-}
 
-select option:focus {
-    background-color: red !important;
-    color: white!important;
-}
+// select option:focus {
+//     background-color: red !important;
+//     color: white!important;
+// }
 
 #FloatingAmount, #FloatingAmountInvalid{
     font-size: f_size(medium);
     font-weight: f_weight(bold);
+}
+
+.transaction_form{
+    border: 1px solid $accent-color-1;
 }

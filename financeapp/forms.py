@@ -1,4 +1,3 @@
-from decimal import Decimal
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, DecimalField, SelectField, ValidationError
 from wtforms.fields import DateTimeLocalField, EmailField
@@ -34,10 +33,10 @@ class TransactionForm(FlaskForm):
 
     CURRENCY_CHOICES = [(currency, " - ".join([currency, get_currency_name(currency)])) for currency in list_currencies()] 
 
-    type = SelectField('Transaction type', choices=[('Ex', 'New Expense'), ('Inc', 'New Income')], validators=[DataRequired()] )
-    currencies = SelectField('Currency', choices=CURRENCY_CHOICES)
-    category = SelectField('Expense Category', choices=[('1', 'Food'), ('2', 'Utility')])
-    label = StringField("Note")
+    type = SelectField('Transaction type', choices=[('Ex', ' Expense'), ('Inc', 'Income')], validators=[DataRequired()] )
+    # currencies = SelectField('Currency', choices=CURRENCY_CHOICES)
+    # category = SelectField('Expense Category', choices=[('1', 'Food'), ('2', 'Utility')])
+    label = StringField("Note", validators=[DataRequired()])
     amount = DecimalField("Amount", places=2, rounding=None, validators=[DataRequired(), NumberRange(min = 0.01 )])
-    date = DateTimeLocalField("Date and Time", format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
-    submit = SubmitField("Save")
+    # date = DateTimeLocalField("Date and Time", format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
+    submit = SubmitField("ADD")

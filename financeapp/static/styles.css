@@ -139,14 +139,17 @@ header .navbar .nav_menu .nav_list .nav_item:hover {
   background-color: #102A57;
 }
 
-.btn-primary {
-  background-color: #5B58EC !important;
-  border: 1px solid #5B58EC !important;
+.form_submit {
+  background-color: #0ABB79 !important;
+  border: 1px solid #0ABB79 !important;
+  width: 100%;
+  height: 100%;
+  padding: auto;
+  margin: 0rem;
 }
 
-.btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-  background-color: #102A57 !important;
-  background-color: #102A57 !important;
+.form_submit:hover, .form_submit:active, .form_submit:visited {
+  opacity: 90%;
 }
 
 .modal-header {
@@ -159,19 +162,12 @@ header .navbar .nav_menu .nav_list .nav_item:hover {
   bottom: 5rem;
 }
 
-select option:checked {
-  background-color: red !important;
-  color: white !important;
+select:hover {
+  background-color: #4285f4 !important;
 }
 
-select option:hover {
-  background-color: red !important;
-  color: white !important;
-}
-
-select option:focus {
-  background-color: red !important;
-  color: white !important;
+option:hover {
+  background-color: #4285f4 !important;
 }
 
 #FloatingAmount, #FloatingAmountInvalid {
