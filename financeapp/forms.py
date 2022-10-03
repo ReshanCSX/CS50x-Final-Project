@@ -31,12 +31,15 @@ class LoginForm(FlaskForm):
 
 class TransactionForm(FlaskForm):
 
-    CURRENCY_CHOICES = [(currency, " - ".join([currency, get_currency_name(currency)])) for currency in list_currencies()] 
+    # CURRENCY_CHOICES = [(currency, " - ".join([currency, get_currency_name(currency)])) for currency in list_currencies()] 
 
     type = SelectField('Transaction type', choices=[('Ex', ' Expense'), ('Inc', 'Income')], validators=[DataRequired()] )
     # currencies = SelectField('Currency', choices=CURRENCY_CHOICES)
     # category = SelectField('Expense Category', choices=[('1', 'Food'), ('2', 'Utility')])
-    label = StringField("Note", validators=[DataRequired()])
+    label = StringField("Transaction Name", validators=[DataRequired()])
     amount = DecimalField("Amount", places=2, rounding=None, validators=[DataRequired(), NumberRange(min = 0.01 )])
-    # date = DateTimeLocalField("Date and Time", format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
+    date = DateTimeLocalField("Date and Time", format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
     submit = SubmitField("ADD")
+
+class TimeForm(FlaskForm):
+    time = SelectField("Time Period", choices=[('0', 'Day'), ('1', 'Month'), ('2', 'Year')])

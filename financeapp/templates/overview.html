@@ -1,6 +1,61 @@
 {% extends "layout.html" %}
 {% set active_page = 'overview' %}
 
+
 {% block main %}
+    <div class="col-md-10 mx-auto">
+    
+    <div class="row">
+        <div class="col-3 ms-auto mt-2">
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+        
+                    {% if form.time.errors %}
+                        {{ form.time(class="form-select select_menu is-invalid", id="FloatingTimeInvalid", onchange="this.form.submit()", placeholder="Username") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.time.errors %}
+                                <span><small> {{ error }} </small></span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.time(class="form-select select_menu", id="FloatingTime", onchange="this.form.submit()") }}
+                    {% endif %}
+                </form>
+        </div>
+    </div>
+        
+       
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-1">
+
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title display-6 text-center text-success fw-bold">{{ income[0] }}</h3>
+                        <h5 class="card-text text-center text-success fw-bold"><small>Income</small></h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title  display-6 text-center text-danger fw-bold">{{ expense[0] }}</h3>
+                        <h5 class="card-text text-center text-danger fw-bold"><small>Spend</small></h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title  display-6 text-center text-warning fw-bold">{{ balance }}</h3>
+                        <h5 class="card-text text-center text-warning fw-bold"><small>Balance</small></h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
 
 {% endblock %}

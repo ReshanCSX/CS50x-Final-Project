@@ -4,12 +4,12 @@
 {% block main %}
 
 <div class="col-md-10 mx-auto mt-4">
-  <form class="border bg-light p-3 mb-3" action="" method="post">
+  <form class="border bg-white p-3 mb-3" action="" method="post">
     {{ form.hidden_tag() }}
 
     <div class="row">
       
-      <div class="col-md-3 my-2 ">
+      <div class="col-md-2 my-2 ">
         <div class="form-floating">
           {% if form.type.errors %}
               {{ form.type(class="form-select select_menu is-invalid", id="FloatingTypeInvalid", placeholder="Username") }}
@@ -26,7 +26,7 @@
         </div>
       </div>
 
-      <div class="col-md-5 my-2">
+      <div class="col-md-4 my-2">
         <div class="form-floating">
           {% if form.label.errors %}
               {{ form.label(class="form-control is-invalid", id="FloatingLabelInvalid", placeholder="Note") }}
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div class="col-md-3 my-2">
+      <div class="col-md-2 my-2">
         <div class="form-floating">
           {% if form.amount.errors %}
               {{ form.amount(class="form-control is-invalid", id="FloatingAmountInvalid", placeholder="Username") }}
@@ -60,6 +60,23 @@
         </div>
       </div>
 
+      <div class="col-md-3 my-2">
+        <div class="form-floating">
+          {% if form.date.errors %}
+              {{ form.date(class="form-control is-invalid", id="startDateInvalid") }}
+              {{ form.date.label(for="startDateInvalid") }}
+              <div class="invalid-feedback">
+                  {% for error in form.date.errors %}
+                      <span><small> {{ error }} </small></span>
+                  {% endfor %}
+              </div>
+          {% else %}
+              {{ form.date(class="form-control", id="startDate") }}
+              {{ form.date.label(for="startDate") }}
+          {% endif %}
+        </div>
+      </div>
+
       <div class="col-md-1 d-grid mx-auto py-0 my-2">
           {{ form.submit(class="form_submit btn btn-primary d-block") }}
       </div>
@@ -70,13 +87,14 @@
   </form>
 
 
-  <div class="table-responsive-md mt-4">
-    <table class="table table-striped">
+  <div class="table-responsive-md mt-5">
+    <table class="table table-striped mt-3">
       <thead>
         <tr>
           <th>Transaction</th>
           <th>Type</th>
           <th>Amount</th>
+          <th>Date and Time</th>
           <th></th>
         </tr>
       </thead>
@@ -90,6 +108,7 @@
             <td class="text-success">Income</td>
           {% endif %}
           <td>${{ transaction.amount }}</td>
+          <td>{{ transaction.date }}</td>
           <td class="text-center">
             <a href="{{ url_for('transactions') }}/delete/{{transaction.id}}" class="btn btn-outline-danger">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">

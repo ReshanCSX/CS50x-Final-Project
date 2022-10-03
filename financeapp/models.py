@@ -32,7 +32,7 @@ class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     amount = db.Column(db.Integer, nullable=False)
     # category = db.Column(db.String(2), nullable=False)
-    # date = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
+    date = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
     transaction_type = db.Column(db.String(60), nullable=False)
     transaction_name = db.Column(db.String(60))
     # description = db.Column(db.String(120))

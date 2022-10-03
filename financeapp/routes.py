@@ -1,7 +1,9 @@
+from datetime import datetime
 from flask import redirect, render_template, url_for, flash, request
 from financeapp import app, db
 from financeapp.models import User, Account, Transactions
-from financeapp.forms import RegistrationForm, LoginForm, TransactionForm
+from sqlalchemy.sql import func, extract  
+from financeapp.forms import RegistrationForm, LoginForm, TransactionForm, TimeForm
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_user, current_user, login_required, logout_user
 
@@ -70,7 +72,39 @@ def logout():
 @login_required
 def home():
 
-    return render_template("overview.html", title = "Overview")
+    form = TimeForm(time=1)
+    date = datetime.now().month
+    month = "month"
+
+    if form.validate_on_submit():
+        if form.time.data == "0":
+            date = datetime.now().day
+            month = "day"
+        elif form.time.data == "1":
+            date = datetime.now().month
+            month = "month"
+        elif form.time.data == "2":
+            date = datetime.now().year
+            month = "year"
+
+
+    user = User.query.filter_by(username=current_user.username).first()
+    # user_transactions = Transactions.query.filter_by(user_id=user.id)
+    
+    income = db.session.query(func.sum(Transactions.amount).filter(extract(month, Transactions.date)==date, Transactions.transaction_type=="Inc", Transactions.user_id==user.id)).first()
+    expense = db.session.query(func.sum(Transactions.amount).filter(extract(month, Transactions.date)==date, Transactions.transaction_type=="Ex", Transactions.user_id==user.id)).first()
+    balance = 0
+
+    if income[0] and expense[0] is not None:
+        balance = income[0] - expense[0]
+    elif income[0] is None:
+        income = "0"
+        balance = -abs(expense[0])
+    elif expense[0] is None:
+        expense = "0"
+        balance = income[0]
+        
+    return render_template("overview.html", title = "Overview", form = form, income = income, expense = expense, balance = balance, user_transactions = transactions )
 
 @app.route("/transactions", methods=["GET", "POST"])
 @login_required
@@ -78,12 +112,12 @@ def transactions():
     form = TransactionForm()
 
     user = User.query.filter_by(username=current_user.username).first()
-    user_transactions = Transactions.query.filter_by(user_id=user.id)
+    user_transactions = Transactions.query.filter_by(user_id=user.id).order_by(Transactions.date)
 
 
     if form.validate_on_submit():
 
-        transaction = Transactions(amount=int(form.amount.data), transaction_type=form.type.data, transaction_name=form.label.data, user_id=user.id)
+        transaction = Transactions(amount=int(form.amount.data), transaction_type=form.type.data, transaction_name=form.label.data, user_id=user.id, date = form.date.data)
         db.session.add(transaction)
         db.session.commit()
         flash("Record Added Successfully", "success")
