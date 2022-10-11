@@ -6,10 +6,9 @@
     <div class="col-md-10 mx-auto">
     
     <div class="row">
-        <div class="col-3 ms-auto mt-2">
+        <div class="col-sm-3 ms-auto mt-2">
             <form action="" method="post">
                 {{ form.hidden_tag() }}
-        
                     {% if form.time.errors %}
                         {{ form.time(class="form-select select_menu is-invalid", id="FloatingTimeInvalid", onchange="this.form.submit()", placeholder="Username") }}
                         <div class="invalid-feedback">
