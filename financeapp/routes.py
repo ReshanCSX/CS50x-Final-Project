@@ -90,19 +90,18 @@ def home():
 
     user = User.query.filter_by(username=current_user.username).first()
     # user_transactions = Transactions.query.filter_by(user_id=user.id)
-    
-    income = db.session.query(func.sum(Transactions.amount).filter(extract(month, Transactions.date)==date, Transactions.transaction_type=="Inc", Transactions.user_id==user.id)).first()
-    expense = db.session.query(func.sum(Transactions.amount).filter(extract(month, Transactions.date)==date, Transactions.transaction_type=="Ex", Transactions.user_id==user.id)).first()
-    balance = 0
 
-    if income[0] and expense[0] is not None:
-        balance = income[0] - expense[0]
-    elif income[0] is None:
-        income = "0"
-        balance = -abs(expense[0])
-    elif expense[0] is None:
-        expense = "0"
-        balance = income[0]
+    def value_return(x):
+        if x[0] is None:
+            return 0
+        else:
+            return x[0]
+    
+    income = value_return(db.session.query(func.sum(Transactions.amount).filter(extract(month, Transactions.date)==date, Transactions.transaction_type=="Inc", Transactions.user_id==user.id)).first())
+    expense = value_return(db.session.query(func.sum(Transactions.amount).filter(extract(month, Transactions.date)==date, Transactions.transaction_type=="Ex", Transactions.user_id==user.id)).first())
+
+    balance = income - expense
+
         
     return render_template("overview.html", title = "Overview", form = form, income = income, expense = expense, balance = balance, user_transactions = transactions )
 
