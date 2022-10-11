@@ -2,90 +2,112 @@
 {% set active_page = 'transactions' %}
 
 {% block main %}
-
 <div class="col-md-10 mx-auto mt-4">
-  <form class="border bg-white p-3 mb-3" action="" method="post">
-    {{ form.hidden_tag() }}
-
-    <div class="row">
-      
-      <div class="col-md-2 my-2 ">
-        <div class="form-floating">
-          {% if form.type.errors %}
-              {{ form.type(class="form-select select_menu is-invalid", id="FloatingTypeInvalid", placeholder="Username") }}
-              {{ form.type.label(for="FloatingTypeInvalid") }}
-              <div class="invalid-feedback">
-                  {% for error in form.type.errors %}
-                      <span><small> {{ error }} </small></span>
-                  {% endfor %}
-              </div>
-          {% else %}
-              {{ form.type(class="form-select select_menu", id="FloatingType", placeholder="type") }}
-              {{ form.type.label(for="FloatingType") }}
-          {% endif %}
-        </div>
-      </div>
-
-      <div class="col-md-4 my-2">
-        <div class="form-floating">
-          {% if form.label.errors %}
-              {{ form.label(class="form-control is-invalid", id="FloatingLabelInvalid", placeholder="Note") }}
-              {{ form.label.label(for="FloatingLabelInvalid") }}
-              <div class="invalid-feedback">
-                  {% for error in form.label.errors %}
-                      <span><small> {{ error }} </small></span>
-                  {% endfor %}
-              </div>
-          {% else %}
-              {{ form.label(class="form-control", id="FloatingLabel", placeholder="Note") }}
-              {{ form.label.label(for="FloatingLabel") }}
-          {% endif %}
-        </div>
-      </div>
-
-      <div class="col-md-2 my-2">
-        <div class="form-floating">
-          {% if form.amount.errors %}
-              {{ form.amount(class="form-control is-invalid", id="FloatingAmountInvalid", placeholder="Username") }}
-              {{ form.amount.label(for="FloatingAmountInvalid") }}
-              <div class="invalid-feedback">
-                  {% for error in form.amount.errors %}
-                      <span><small> {{ error }} </small></span>
-                  {% endfor %}
-              </div>
-          {% else %}
-              {{ form.amount(class="form-control", id="FloatingAmount", placeholder="Amount") }}
-              {{ form.amount.label(for="FloatingAmount") }}
-          {% endif %}
-        </div>
-      </div>
-
-      <div class="col-md-3 my-2">
-        <div class="form-floating">
-          {% if form.date.errors %}
-              {{ form.date(class="form-control is-invalid", id="startDateInvalid") }}
-              {{ form.date.label(for="startDateInvalid") }}
-              <div class="invalid-feedback">
-                  {% for error in form.date.errors %}
-                      <span><small> {{ error }} </small></span>
-                  {% endfor %}
-              </div>
-          {% else %}
-              {{ form.date(class="form-control", id="startDate") }}
-              {{ form.date.label(for="startDate") }}
-          {% endif %}
-        </div>
-      </div>
-
-      <div class="col-md-1 d-grid mx-auto py-0 my-2">
-          {{ form.submit(class="form_submit btn btn-primary d-block") }}
-      </div>
-
+  <!-- Button trigger modal -->
+  <div class="row">
+    <div class="col-md-3 d-grid mx-auto py-0 my-2">
+      <button type="button" class="form_submit btn btn-primary" data-bs-toggle="modal" data-bs-target="#transactionModal">
+        Add Transaction
+      </button>
     </div>
+  </div>
 
 
-  </form>
+  <!-- Modal -->
+  <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
 
+          <form action="" method="post">
+            {{ form.hidden_tag() }}
+              <!-- Type -->
+              <div class="row">
+                <div class="col-md-5 my-2 ">
+                  <div class="form-floating">
+                    {% if form.type.errors %}
+                        {{ form.type(class="form-select select_menu is-invalid", id="FloatingTypeInvalid", placeholder="Username") }}
+                        {{ form.type.label(for="FloatingTypeInvalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.type.errors %}
+                                <span><small> {{ error }} </small></span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.type(class="form-select select_menu", id="FloatingType", placeholder="type") }}
+                        {{ form.type.label(for="FloatingType") }}
+                    {% endif %}
+                  </div>
+              </div>
+
+              <!-- Transaction Name -->
+              <div class="col-md-7 my-2">
+                <div class="form-floating">
+                  {% if form.label.errors %}
+                      {{ form.label(class="form-control is-invalid", id="FloatingLabelInvalid", placeholder="Note") }}
+                      {{ form.label.label(for="FloatingLabelInvalid") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.label.errors %}
+                              <span><small> {{ error }} </small></span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ form.label(class="form-control", id="FloatingLabel", placeholder="Note") }}
+                      {{ form.label.label(for="FloatingLabel") }}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <!-- Amount -->
+            <div class="col my-2">
+              <div class="form-floating">
+                {% if form.amount.errors %}
+                    {{ form.amount(class="form-control is-invalid", id="FloatingAmountInvalid", placeholder="Username") }}
+                    {{ form.amount.label(for="FloatingAmountInvalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.amount.errors %}
+                            <span><small> {{ error }} </small></span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.amount(class="form-control", id="FloatingAmount", placeholder="Amount") }}
+                    {{ form.amount.label(for="FloatingAmount") }}
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Date -->
+            <div class="col my-2">
+              <div class="form-floating">
+                {% if form.date.errors %}
+                    {{ form.date(class="form-control is-invalid", id="startDateInvalid") }}
+                    {{ form.date.label(for="startDateInvalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.date.errors %}
+                            <span><small> {{ error }} </small></span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.date(class="form-control", id="startDate") }}
+                    {{ form.date.label(for="startDate") }}
+                {% endif %}
+              </div>
+            </div>
+
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          {{ form.submit(class="form_submit btn btn-primary") }}
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
 
   <div class="table-responsive-md mt-5">
     <table class="table table-striped mt-3">
@@ -123,7 +145,16 @@
 </div>
 
 
+
 </div>
+
+
+
+
+
+
+
+      
 
 
 
