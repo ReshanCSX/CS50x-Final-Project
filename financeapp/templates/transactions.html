@@ -80,6 +80,23 @@
               </div>
             </div>
 
+            <!-- Members -->
+            <div class="card">
+              <div class="card-header">
+                Members
+              </div>
+              <ul class="list-group list-group-flush">
+                {% for member in form.members %}
+                <li class="list-group-item p-3">
+                  <div class="form-check d-flex flex-row-reverse justify-content-between">
+                    {{ member(class="form-check-input") }}
+                    {{ member.label(class="form-check-label") }}                  
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>
+
             <!-- Date -->
             <div class="col my-3">
               <div class="form-floating">
@@ -96,24 +113,6 @@
                     {{ form.date.label(for="startDate") }}
                 {% endif %}
               </div>
-            </div>
-
-
-
-            <div class="card">
-              <div class="card-header">
-                Members
-              </div>
-              <ul class="list-group list-group-flush">
-                {% for member in form.members %}
-                <li class="list-group-item p-3">
-                  <div class="form-check">
-                    {{ member(class="form-check-input") }}
-                    {{ member.label(class="form-check-label") }}                  
-                  </div>
-                </li>
-                {% endfor %}
-              </ul>
             </div>
 
 
