@@ -233,6 +233,16 @@ header{
     font-weight: f_weight(bold);
 }
 
+.bg{
+    background-color: $primary-color;
+}
+
+.form-check {
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    justify-content: space-between !important;
+  }
+
 // .transaction_form{
 //     border: 1px solid $accent-color-1;
 //     border-radius: 10px;

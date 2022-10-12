@@ -1,9 +1,9 @@
 from datetime import datetime
 from flask import redirect, render_template, url_for, flash, request
 from financeapp import app, db
-from financeapp.models import User, Account, Transactions
-from sqlalchemy.sql import func, extract  
-from financeapp.forms import RegistrationForm, LoginForm, TransactionForm, TimeForm
+from financeapp.models import User, Account, Transactions, Members
+from sqlalchemy.sql import func, extract, desc  
+from financeapp.forms import RegistrationForm, LoginForm, TransactionForm, TimeForm, MembersForm
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_user, current_user, login_required, logout_user
 
@@ -89,7 +89,6 @@ def home():
 
 
     user = User.query.filter_by(username=current_user.username).first()
-    # user_transactions = Transactions.query.filter_by(user_id=user.id)
 
     def value_return(x):
         if x[0] is None:
@@ -111,8 +110,14 @@ def transactions():
     form = TransactionForm()
 
     user = User.query.filter_by(username=current_user.username).first()
-    user_transactions = Transactions.query.filter_by(user_id=user.id).order_by(Transactions.date)
+    user_transactions = Transactions.query.filter_by(user_id=user.id).order_by(desc(Transactions.date))
+    
 
+
+    members = Members.query.filter_by(user_id=current_user.id).all()
+    members_list=[(member.name) for member in members]
+    form = TransactionForm()
+    form.members.choices = members_list
 
     if form.validate_on_submit():
 
@@ -134,3 +139,26 @@ def del_transactions(id):
     db.session.commit()
     flash("Record Deleted", "danger")
     return redirect(url_for('transactions'))
+
+@app.route("/members", methods=["GET", "POST"])
+@login_required
+
+def members():
+
+
+    form = MembersForm()
+    
+
+    user = User.query.filter_by(username=current_user.username).first()
+    user_members = Members.query.filter_by(user_id=user.id)
+
+    if form.validate_on_submit():
+        member = Members(name=form.members.data, user_id=user.id)
+        db.session.add(member)
+        db.session.commit()
+        flash("Member Added", "success")
+        return redirect(url_for('members'))
+
+
+
+    return render_template("members.html", form = form, members = user_members)

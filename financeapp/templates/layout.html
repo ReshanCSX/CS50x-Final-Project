@@ -32,7 +32,7 @@
           <div class="nav_menu bottom me-auto">
             <ul class="nav_list">
               <li class="nav_item"><a href="{{ url_for('home') }}" class="all {{ 'active' if active_page == 'overview' }}">Overview</a></li>
-              <li class="nav_item"><a href="#" class="all {{ 'active' if active_page == 'budget' }}">Budget</a></li>
+              <li class="nav_item"><a href="{{ url_for('members') }}" class="all {{ 'active' if active_page == 'members' }}">Members</a></li>
               <li class="nav_item"><a href="{{ url_for('transactions') }}" class="all {{ 'active' if active_page == 'transactions' }}">Transactions</a></li>
             </ul>
           </div>

@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% set active_page = "members" %}
+
+{% block main %}
+    <div class="col-md-6 mx-auto mt-4">
+
+        <form class="border bg-white p-3 mb-3" action="" method="post">
+            {{ form.hidden_tag() }}
+            <p class="lead">Add New Members </p>
+            <div class="row">
+                <div class="col-md-8 my-2">
+                    <div class="form-floating">
+                        {% if form.members.errors %}
+                            {{ form.members(class="form-control is-invalid", id="FloatingLabelInvalid", placeholder="Type Member's Name") }}
+                            {{ form.members.label(for="FloatingLabelInvalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.label.errors %}
+                                        <span><small> {{ error }} </small></span>
+                                    {% endfor %}
+                                </div>
+                        {% else %}
+                            {{ form.members(class="form-control", id="FloatingLabel", placeholder="Type Member's Name") }}
+                            {{ form.members.label(for="FloatingLabel") }}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-md-4 d-grid py-0 my-2">
+                    {{ form.submit(class="form_submit btn btn-primary d-block") }}
+                </div>
+
+            </div>
+            
+        </form>
+
+        <div class="card">
+            <div class="card-header">
+                Members
+            </div>
+            <ul class="card-body">
+                {% for member in members %}
+                <li class="list-group-item py-3">{{member.name}}</li>
+                {% endfor %}
+            </ul>
+          </div>
+
+
+    </div>
+{% endblock %}
+

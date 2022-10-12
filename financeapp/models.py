@@ -14,6 +14,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     account = db.relationship('Account', backref='account_holder', lazy=True)
     transactions = db.relationship('Transactions', backref='transactions', lazy=True)
+    members = db.relationship('Members', backref='members', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
@@ -40,3 +41,12 @@ class Transactions(db.Model):
 
     def __repr__(self):
         return f"Transactions('{self.amount}', '{self.transaction_type}', '{self.transaction_name}')"
+
+class Members(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Members('{self.name}')"
+
