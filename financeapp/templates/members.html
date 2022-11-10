@@ -45,15 +45,15 @@
                                 {% for member_payable in member_payables %}
                                     {% if member_payable[0] == member.name %}
 
-                                        {% if member_payable[1] <= 0 %}
+                                        {% if member_payable[1] < 0 %}
                                             <span class="text-danger fw-bold">
-                                            {{member_payable[1]}}
+                                            {{ '%0.2f'|format(member_payable[1]|float) }}
                                             </span>
                                         {% endif %}
 
-                                        {% if member_payable[1] > 0 %}
+                                        {% if member_payable[1] >= 0 %}
                                             <span class="text-success fw-bold">
-                                            {{member_payable[1]}}
+                                            {{ '%0.2f'|format(member_payable[1]|float) }}
                                             </span>
                                         {% endif %}
                                     {% endif %}
