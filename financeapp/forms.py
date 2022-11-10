@@ -1,10 +1,14 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, DecimalField, SelectField, SelectMultipleField, ValidationError
 from wtforms.fields import DateTimeLocalField, EmailField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, NumberRange
+from wtforms.validators import DataRequired, InputRequired, Length, Email, EqualTo, NumberRange
 from wtforms.widgets import CheckboxInput, ListWidget
 from financeapp.models import User, Members
 from babel.numbers import list_currencies, get_currency_name
+
+class MultiCheckboxField(SelectMultipleField):
+    widget = ListWidget(prefix_label=False)
+    option_widget = CheckboxInput()
 
 class RegistrationForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired(), Length(min=2, max=20)])
@@ -41,9 +45,10 @@ class TransactionForm(FlaskForm):
     label = StringField("Transaction Name", validators=[DataRequired()])
     amount = DecimalField("Amount", places=2, rounding=None, validators=[DataRequired(), NumberRange(min = 0.01 )])
     date = DateTimeLocalField("Date and Time", format='%Y-%m-%dT%H:%M', validators=[DataRequired()])
-    members = SelectMultipleField('Members', option_widget=CheckboxInput(), widget=ListWidget(prefix_label=False), coerce=int)
+    members = MultiCheckboxField('Members', coerce=int)
     submit = SubmitField("ADD")
 
+            
 class TimeForm(FlaskForm):
     time = SelectField("Time Period", choices=[('0', 'Day'), ('1', 'Month'), ('2', 'Year')])
 

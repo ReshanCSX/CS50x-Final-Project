@@ -28,23 +28,49 @@
                 <div class="col-md-4 d-grid py-0 my-2">
                     {{ form.submit(class="form_submit btn btn-primary d-block") }}
                 </div>
-
             </div>
-            
         </form>
 
         <div class="card">
-            <div class="card-header">
+            <div class="card-header text-muted ">
                 Members
             </div>
             <ul class="card-body">
+
                 {% for member in members %}
-                <li class="list-group-item py-3">{{member.name}}</li>
+                <li class="list-group-item px-4 py-3">
+                    <div class="row">
+                        <div class="col-6">{{member.name}}</div>
+                        <div class="col-6 text-end">
+                                {% for member_payable in member_payables %}
+                                    {% if member_payable[0] == member.name %}
+
+                                        {% if member_payable[1] <= 0 %}
+                                            <span class="text-danger fw-bold">
+                                            {{member_payable[1]}}
+                                            </span>
+                                        {% endif %}
+
+                                        {% if member_payable[1] > 0 %}
+                                            <span class="text-success fw-bold">
+                                            {{member_payable[1]}}
+                                            </span>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                        </div>
+                    </div>
+                </li>
                 {% endfor %}
+
             </ul>
           </div>
 
-
     </div>
+
+    
 {% endblock %}
+
+
+
 

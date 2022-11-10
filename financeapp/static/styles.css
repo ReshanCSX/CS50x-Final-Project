@@ -142,8 +142,6 @@ header .navbar .nav_menu .nav_list .nav_item:hover {
 .form_submit {
   background-color: #0ABB79 !important;
   border: 1px solid #0ABB79 !important;
-  width: 100%;
-  height: 100%;
   padding: auto;
   margin: 0rem;
 }
@@ -165,4 +163,8 @@ header .navbar .nav_menu .nav_list .nav_item:hover {
 #FloatingAmount, #FloatingAmountInvalid {
   font-size: 1.5rem;
   font-weight: 700;
+}
+
+.bg {
+  background-color: #5B58EC;
 }/*# sourceMappingURL=styles.css.map */

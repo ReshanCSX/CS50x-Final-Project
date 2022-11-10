@@ -1,4 +1,5 @@
 from datetime import datetime
+from email.policy import default
 from financeapp import db, login_manager
 from flask_login import UserMixin
 
@@ -6,6 +7,10 @@ from flask_login import UserMixin
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+member_transactions = db.Table('member_transactions',
+                   db.Column('member_id', db.Integer, db.ForeignKey('members.id')),
+                   db.Column('transaction_id', db.Integer, db.ForeignKey('transactions.id')))
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -22,7 +27,7 @@ class User(db.Model, UserMixin):
 class Account(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     account_name = db.Column(db.String(20), nullable=False)
-    current_balance = db.Column(db.Integer, nullable=False, default = 0)
+    current_balance = db.Column(db.Integer, nullable=False, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 
@@ -40,12 +45,16 @@ class Transactions(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __repr__(self):
-        return f"Transactions('{self.amount}', '{self.transaction_type}', '{self.transaction_name}')"
+        return f"Transactions( '{self.transaction_type}', '{self.transaction_name}', '{self.amount}')"
 
 class Members(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    # form_id = db.Column(db.Integer, nullable=False)
     name = db.Column(db.String(20), nullable=False)
+    # amount = db.Column(db.Integer, nullable=False, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    trans_members = db.relationship('Transactions', secondary=member_transactions, backref='member_transactions')
+
 
     def __repr__(self):
         return f"Members('{self.name}')"
