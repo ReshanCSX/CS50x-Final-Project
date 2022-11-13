@@ -62,56 +62,62 @@
                 </div>
               </div>
             </div>
+
             <!-- Amount -->
-            <div class="col my-3">
-              <div class="form-floating">
-                {% if form.amount.errors %}
-                    {{ form.amount(class="form-control is-invalid", id="FloatingAmountInvalid", placeholder="Username") }}
-                    {{ form.amount.label(for="FloatingAmountInvalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.amount.errors %}
-                            <span><small> {{ error }} </small></span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.amount(class="form-control", id="FloatingAmount", placeholder="Amount") }}
-                    {{ form.amount.label(for="FloatingAmount") }}
-                {% endif %}
+            <div class="row my-3">
+              <div class="col">
+                <div class="form-floating">
+                  {% if form.amount.errors %}
+                      {{ form.amount(class="form-control is-invalid", id="FloatingAmountInvalid", placeholder="Username") }}
+                      {{ form.amount.label(for="FloatingAmountInvalid") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.amount.errors %}
+                              <span><small> {{ error }} </small></span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ form.amount(class="form-control", id="FloatingAmount", placeholder="Amount") }}
+                      {{ form.amount.label(for="FloatingAmount") }}
+                  {% endif %}
+                </div>
               </div>
             </div>
 
             <!-- Members -->
-            <div class="card">
-              <div class="card-header">
-                Members
+              <div class="card">
+                <div class="card-header">
+                  Members
+                </div>
+                <ul class="list-group list-group-flush">
+                  {% for member in form.members %}
+                  <li class="list-group-item p-3">
+                    <div class="form-check d-flex flex-row-reverse justify-content-between">
+                      {{ member(class="form-check-input") }}
+                      {{ member.label(class="form-check-label") }}                  
+                    </div>
+                  </li>
+                  {% endfor %}
+                </ul>
               </div>
-              <ul class="list-group list-group-flush">
-                {% for member in form.members %}
-                <li class="list-group-item p-3">
-                  <div class="form-check d-flex flex-row-reverse justify-content-between">
-                    {{ member(class="form-check-input") }}
-                    {{ member.label(class="form-check-label") }}                  
-                  </div>
-                </li>
-                {% endfor %}
-              </ul>
-            </div>
+
 
             <!-- Date -->
-            <div class="col my-3">
-              <div class="form-floating">
-                {% if form.date.errors %}
-                    {{ form.date(class="form-control is-invalid", id="startDateInvalid") }}
-                    {{ form.date.label(for="startDateInvalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in form.date.errors %}
-                            <span><small> {{ error }} </small></span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    {{ form.date(class="form-control", id="startDate") }}
-                    {{ form.date.label(for="startDate") }}
-                {% endif %}
+            <div class="row my-3">
+              <div class="col">
+                <div class="form-floating">
+                  {% if form.date.errors %}
+                      {{ form.date(class="form-control is-invalid", id="startDateInvalid") }}
+                      {{ form.date.label(for="startDateInvalid") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.date.errors %}
+                              <span><small> {{ error }} </small></span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ form.date(class="form-control", id="startDate") }}
+                      {{ form.date.label(for="startDate") }}
+                  {% endif %}
+                </div>
               </div>
             </div>
 
