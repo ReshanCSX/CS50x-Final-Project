@@ -1,6 +1,6 @@
 from datetime import datetime
-from flask import redirect, render_template, url_for, flash, request
-from financeapp import app, db
+from flask import redirect, render_template, url_for, flash, request, abort
+from financeapp import app, db, Session
 from financeapp.models import User, Account, Transactions, Members
 from sqlalchemy.sql import func, extract, desc  
 from financeapp.forms import RegistrationForm, LoginForm, TransactionForm, TimeForm, MembersForm
@@ -9,6 +9,9 @@ from flask_login import login_user, current_user, login_required, logout_user
 
 @app.route("/")
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for("home"))
+
     return render_template("index.html")
 
 @app.route("/login", methods=["GET", "POST"])
@@ -158,6 +161,10 @@ def transactions():
 
 def del_transactions(id):
     del_trasaction = Transactions.query.get_or_404(id)
+
+    if del_trasaction.user_id != current_user.id:
+        abort(403)
+
     db.session.delete(del_trasaction)
     db.session.commit()
     flash("Record Deleted", "danger")
