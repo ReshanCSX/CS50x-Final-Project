@@ -55,3 +55,7 @@ class TimeForm(FlaskForm):
 class MembersForm(FlaskForm):
     members = StringField("Name", validators=[DataRequired()])
     submit = SubmitField("Add Member")
+
+class MembersEditForm(FlaskForm):
+    member_name = StringField("Name", validators=[DataRequired()])
+    submit = SubmitField("Edit")

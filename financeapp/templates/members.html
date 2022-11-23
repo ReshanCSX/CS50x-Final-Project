@@ -4,7 +4,9 @@
 {% block main %}
     <div class="col-md-6 mx-auto mt-4">
 
-        <form class="border bg-white p-3 mb-3" action="" method="post">
+        <!-- Add new members form -->
+
+        <form class="border bg-white p-3 mb-3" action="" method="POST">
             {{ form.hidden_tag() }}
             <p class="lead">Add New Members </p>
             <div class="row">
@@ -14,7 +16,7 @@
                             {{ form.members(class="form-control is-invalid", id="FloatingLabelInvalid", placeholder="Type Member's Name") }}
                             {{ form.members.label(for="FloatingLabelInvalid") }}
                                 <div class="invalid-feedback">
-                                    {% for error in form.label.errors %}
+                                    {% for error in form.members.errors %}
                                         <span><small> {{ error }} </small></span>
                                     {% endfor %}
                                 </div>
@@ -31,47 +33,204 @@
             </div>
         </form>
 
+        <!-- Showing existing members -->
         <div class="card">
             <div class="card-header text-muted ">
                 Members
             </div>
-            <ul class="card-body">
 
-                {% for member in members %}
-                <!-- <button type="button" class="link_hover" data-bs-toggle="modal" data-bs-target="#exampleModal"> -->
-                <li class="list-group-item px-4 py-3">
-                    <div class="row">
-                        <div class="col-6">{{member.name}}</div>
-                        <div class="col-6 text-end">
+            <div class="card-body">
+                <div class="container">
+                {% if members[0] %}
+                    {% for member in members %}
+                        <!-- Button trigger modal -->
+
+                        <button type="button" class="member-button " data-id="{{member.id}}" style="width:100%; border: none;" data-name="{{member.name}}" data-bs-toggle="modal" data-bs-target="#memberModal" data-name="{{member.name}}" data-id="{{member.id}}">
+                            <div class="row list-group-item d-flex">
+                                <div class="col-6 py-2 text-start">{{member.name}}</div>
+                            
                                 {% for member_payable in member_payables %}
                                     {% if member_payable[0] == member.name %}
-
+                                
                                         {% if member_payable[1] < 0 %}
-                                            <span class="text-danger fw-bold">
-                                            {{ '%0.2f'|format(member_payable[1]|float) }}
-                                            </span>
+                                            <div class="col-6 py-2 text-danger fw-bold text-end">{{ '%0.2f'|format(member_payable[1]|float) }}</div>  
                                         {% endif %}
 
                                         {% if member_payable[1] >= 0 %}
-                                            <span class="text-success fw-bold">
-                                            {{ '%0.2f'|format(member_payable[1]|float) }}
-                                            </span>
+                                            <div class="col-6 py-2 text-success fw-bold text-end">{{ '%0.2f'|format(member_payable[1]|float) }}</div>
                                         {% endif %}
                                     {% endif %}
                                 {% endfor %}
-                        </div>
+                                </div> 
+                            </button>
+                    {% endfor %}
+                {% else %}
+                        <p class="fs-3 fw-light text-muted text-center my-3">No Members</p>
+                {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Editing existing members data -->
+        <div class="modal fade" id="memberModal" tabindex="-1" aria-labelledby="editMemberModalLabel" aria-hidden="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+
+                    <!-- Header -->
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="memberModalLabel">Edit Member</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </li>
-                <!-- </button> -->
-                {% endfor %}
 
-            </ul>
-          </div>
+                    <!-- Body -->
+                    <div class="modal-body">
+                        
+                        <!-- Form starts from here -->
+                        <form id="member-update" action="" method="post">
+                            {{ edit_form.hidden_tag() }} 
+                            <div class="invalid-feedback">
+                                <span><small id="csfr-invalid-feedback"></small></span>
+                            </div>
+                            
+                            <div class="row my-3">
 
+                                <!-- Member name -->
+                                <div class="col">
+                                    <div class="form-floating">
+                                        
+                                        {{ edit_form.member_name(class="form-control edit-member-name", id="FloatingMember", placeholder="Name") }}
+                                        {{ edit_form.member_name.label(for="FloatingMember") }}
+                                        <div class="invalid-feedback">
+                                            <span><small id="name-invalid-feedback"></small></span>
+                                        </div>
+                      
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                        <!-- Modal Footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            {{ edit_form.submit(class="form_submit btn btn-primary", id="edit-button") }}
+                            </form>
+                            <form id="member-delete" action="" method="POST">
+                                <input class="btn btn-danger" value="Delete" type="submit">
+                                <!-- <a href="#" type="button" id="member-delete" class="btn btn-danger">Delete</a> -->
+                            </form>         
+                        </div>       
+                </div>
+            </div>
+        </div>
     </div>
-
-    
 {% endblock %}
+
+{% block script %}
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () =>{
+
+
+            document.querySelectorAll(".member-button").forEach(button => {
+                button.onclick = () => {
+
+                    // Creating a fields object with input field addresses 
+                    const fields = {
+                        csrf_token: {
+                            input: document.querySelector("#member-update #csrf_token"),
+                            error: document.querySelector("#csfr-invalid-feedback")  
+                        },
+                        member_name: {
+                            input: document.querySelector('#FloatingMember'),
+                            error: document.querySelector('#name-invalid-feedback')
+                        }
+                    }
+
+                    // Storing route information
+                    const SCRIPT_ROOT = window.origin;
+                    const id = button.dataset.id;
+             
+                    const url = `${SCRIPT_ROOT}/members/update/${id}`;
+                    const del_url = `${SCRIPT_ROOT}/members/delete/${id}`;
+
+                    // Creating delete route
+                    document.querySelector("#member-delete").action = del_url;
+
+
+                    // Getting member name from the server
+                    fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        document.querySelector('#FloatingMember').value = data.name;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+
+
+                    // Listning to user submit button clicks 
+                    document.querySelector("#edit-button").addEventListener('click', (ev) => {
+
+                        // Prevent posting to the default route
+                        ev.preventDefault();
+
+                        // New form object
+                        let data = new FormData();
+
+                        // Adding user inputs to the FormData object
+                        data.csrf_token = document.querySelector("#csrf_token").value;
+                        data.member_name = document.querySelector('.edit-member-name').value;
+                        
+
+                        // Posting changed member name to the server
+                        fetch(url,
+                            {
+                                method: "POST",
+                                headers: new Headers({
+                                    'Content-Type': 'application/json'
+                                }),
+                                body: JSON.stringify(data)
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                
+                                // If server responds with success message
+                                if(data.status == 'ok'){
+
+                                    var myModal = new bootstrap.Modal(document.querySelector("#memberModal"));
+                                    myModal.hide();
+                                    location.reload();
+
+                                }
+                                // If server responds with error message
+                                else{
+
+                                    // Print error messages
+                                    Object.keys(data).forEach(key => {
+                                        fields[key].input.classList.add('is-invalid');
+                                        fields[key].error.innerHTML = data[key][0];
+                                    })      
+                                }
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            });
+
+                    });  
+
+                    
+                }
+            });
+        });
+
+
+
+    </script>
+{% endblock %}
+
 
 
 

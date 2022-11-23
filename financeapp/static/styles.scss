@@ -237,7 +237,11 @@ header{
     background-color: $primary-color;
 }
 
+.link_hover{
 
+    li:hover{background-color: #e7e5e5;}
+    
+}
 // .transaction_form{
 //     border: 1px solid $accent-color-1;
 //     border-radius: 10px;

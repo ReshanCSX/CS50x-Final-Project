@@ -1,9 +1,10 @@
 from datetime import datetime
-from flask import redirect, render_template, url_for, flash, request, abort
+from werkzeug.datastructures import ImmutableMultiDict
+from flask import redirect, render_template, url_for, flash, request, abort, jsonify
 from financeapp import app, db, Session
 from financeapp.models import User, Account, Transactions, Members
 from sqlalchemy.sql import func, extract, desc  
-from financeapp.forms import RegistrationForm, LoginForm, TransactionForm, TimeForm, MembersForm
+from financeapp.forms import RegistrationForm, LoginForm, TransactionForm, TimeForm, MembersForm, MembersEditForm
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_user, current_user, login_required, logout_user
 
@@ -155,12 +156,12 @@ def transactions():
     return render_template("transactions.html", title="Transactions", form = form, user_transactions = user_transactions)
 
 
-# Deleting records  route // for Now
-@app.route("/transactions/delete/<int:id>", methods=["GET", "POST"])
+# Deleting records  route
+@app.route("/transactions/delete/<int:transaction_id>")
 @login_required
 
-def del_transactions(id):
-    del_trasaction = Transactions.query.get_or_404(id)
+def del_transactions(transaction_id):
+    del_trasaction = Transactions.query.get_or_404(transaction_id)
 
     if del_trasaction.user_id != current_user.id:
         abort(403)
@@ -196,6 +197,7 @@ def members():
 
     # Adding new members
     form = MembersForm()
+    edit_form = MembersEditForm()
 
     if form.validate_on_submit():
 
@@ -213,4 +215,56 @@ def members():
             flash("Member Already Exists", "danger")
 
 
-    return render_template("members.html", form = form, members = user_members, member_payables = member_payables)
+    return render_template("members.html", form = form, edit_form = edit_form, members = user_members, member_payables = member_payables)
+
+@app.route("/members/update/<int:member_id>", methods=["GET", "POST"])
+@login_required
+
+def update_member(member_id):
+
+    member_details = Members.query.get_or_404(member_id)    
+    
+    if request.method == "POST":
+        
+        req = request.get_json()
+        form_input = ImmutableMultiDict(req)
+        edit_form = MembersEditForm(form_input)
+
+        if edit_form.validate_on_submit():
+
+            if member_details.name == edit_form.member_name.data:
+                flash("No Changes to the Name", "secondary")
+                return jsonify(status='ok')
+            
+            member_details.name = edit_form.member_name.data
+            db.session.commit()
+            flash("Member Updated", "success")
+            return jsonify(status='ok')
+        
+        else:
+            return jsonify(edit_form.errors)
+        
+    if member_details.user_id != current_user.id:
+        abort(403)
+        
+    return jsonify({'name': member_details.name})
+
+
+
+
+@app.route("/members/delete/<int:member_id>", methods=["POST"])
+@login_required
+
+def delete_member(member_id):
+
+    member = Members.query.get_or_404(member_id)
+
+    if member.user_id != current_user.id:
+        abort(403)
+    
+    db.session.delete(member)
+    db.session.commit()
+    flash("Member Deleted", "danger")
+    return redirect(url_for('members'))
+    
+
