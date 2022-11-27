@@ -116,30 +116,43 @@ def home():
 @login_required
 def transactions():
 
-    user = User.query.filter_by(username=current_user.username).first()
-    user_transactions = Transactions.query.filter_by(user_id=user.id).order_by(desc(Transactions.date))
+    user_transactions = Transactions.query.filter_by(user_id=current_user.id).order_by(desc(Transactions.date))
     
     # Render members list 
     members = Members.query.filter_by(user_id=current_user.id).all()
     members_list=list(enumerate(member.name for member in members))
     # members_list=[(member.form_id, member.name) for member in members]
 
+    
+    # Providing each member's details according to user selections
+    def select_member(form_member):
+        item = next(member_name for member_list_id, member_name in members_list if member_list_id == form_member)
+        member_details = next(x for x in members if x.name == item)
+        return member_details
 
     # Transaction form
-    form = TransactionForm()
+    form = TransactionForm(amount = 0, date=datetime.now())
+    form.paid_by.choices = members_list
     form.members.choices = members_list
 
     if form.validate_on_submit():
 
-        # Adding transaction to Transactions table
-        trans = Transactions(amount=int(form.amount.data), transaction_type=form.type.data, transaction_name=form.label.data, user_id=user.id, date = form.date.data)
-        db.session.add(trans)
+        # Getting member details 
+
+        if int(form.paid_by.data) in dict(members_list):
+            member_details = select_member(int(form.paid_by.data))
+            print(type(member_details))
+
+            # Adding transaction to Transactions table
+            transaction = Transactions(amount=float(form.amount.data), transaction_type=form.type.data, transaction_name=form.label.data, user_id=current_user.id, date = form.date.data, paid_by = member_details.id)
+            
+            db.session.add(transaction)
         
-        # Adding transaction to Members table
-        for member in form.members.data:
-            if member in dict(members_list):
-                each_member = Members.query.filter_by(user_id=current_user.id, name = members_list[member][1]).first()
-                each_member.trans_members.append(trans)
+            # Adding transaction to Members table
+            for member in form.members.data:
+                if member in dict(members_list):
+                    member_details1 = select_member(member)
+                    member_details1.trans_members.append(transaction)
 
         # Commiting all the data
         try:

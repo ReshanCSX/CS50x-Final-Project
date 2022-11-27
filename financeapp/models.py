@@ -41,6 +41,7 @@ class Transactions(db.Model):
     date = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
     transaction_type = db.Column(db.String(60), nullable=False)
     transaction_name = db.Column(db.String(60))
+    paid_by = db.Column(db.Integer, nullable=False)
     # description = db.Column(db.String(120))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 

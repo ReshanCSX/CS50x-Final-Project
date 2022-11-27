@@ -171,4 +171,10 @@ header .navbar .nav_menu .nav_list .nav_item:hover {
 
 .link_hover li:hover {
   background-color: #e7e5e5;
+}
+
+#FloatingAmount {
+  height: 5rem;
+  font-size: 3rem;
+  font-weight: 700;
 }/*# sourceMappingURL=styles.css.map */

@@ -242,6 +242,12 @@ header{
     li:hover{background-color: #e7e5e5;}
     
 }
+
+#FloatingAmount{
+    height: 5rem;
+    font-size: 3rem;
+    font-weight: f_weight(bold);
+}
 // .transaction_form{
 //     border: 1px solid $accent-color-1;
 //     border-radius: 10px;
