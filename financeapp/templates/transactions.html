@@ -185,7 +185,7 @@
             {% else %}
               <td class="text-success">Income</td>
             {% endif %}
-            <td>${{ transaction.amount }}</td>
+            <td>{{ transaction.amount }} $</td>
             <td>{{ transaction.date }}</td>
             <td class="text-center">
               <a href="{{ url_for('del_transactions',transaction_id=transaction.id) }}" class="btn btn-outline-danger">
