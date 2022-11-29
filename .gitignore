@@ -2,8 +2,9 @@ venv/
 
 *.pyc
 __pycache__/
+flask_session/
 
-financeapp/flask_session/
+/financeapp/site.db
 
 instance/
 
