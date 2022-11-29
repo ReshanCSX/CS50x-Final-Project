@@ -36,7 +36,7 @@ class Account(db.Model):
 
 class Transactions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    amount = db.Column(db.Integer, nullable=False)
+    amount = db.Column(db.Numeric(precision=10, scale=2, asdecimal = False), nullable=False)
     # category = db.Column(db.String(2), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default = datetime.utcnow)
     transaction_type = db.Column(db.String(60), nullable=False)

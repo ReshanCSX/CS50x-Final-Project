@@ -141,18 +141,25 @@ def transactions():
 
         if int(form.paid_by.data) in dict(members_list):
             member_details = select_member(int(form.paid_by.data))
-            print(type(member_details))
+
 
             # Adding transaction to Transactions table
-            transaction = Transactions(amount=float(form.amount.data), transaction_type=form.type.data, transaction_name=form.label.data, user_id=current_user.id, date = form.date.data, paid_by = member_details.id)
+            def add_transaction(amount):
+                transaction = Transactions(amount=float(amount), transaction_type=form.type.data, transaction_name=form.label.data, user_id=current_user.id, date = form.date.data, paid_by = member_details.id)
+                return transaction
+            
+            if form.type.data == "Ex":
+                transaction = add_transaction(form.amount.data)
+            else:
+                transaction = add_transaction(-(form.amount.data))
             
             db.session.add(transaction)
         
             # Adding transaction to Members table
             for member in form.members.data:
                 if member in dict(members_list):
-                    member_details1 = select_member(member)
-                    member_details1.trans_members.append(transaction)
+                    member_details = select_member(member)
+                    member_details.trans_members.append(transaction)
 
         # Commiting all the data
         try:
@@ -190,28 +197,47 @@ def del_transactions(transaction_id):
 
 def members():
 
-    user_members = Members.query.filter_by(user_id=current_user.id)
+    user_members = Members.query.filter_by(user_id=current_user.id).all()
     
-    # A list to store each member payables
-    member_payables = []
     
-    # Adding payable amounts of each individual member
-    for member in user_members:
-        if member:
-            amount = 0
-            for member_transaction in member.trans_members:
-                transactions = Transactions.query.filter_by(id=member_transaction.id).first()
-                number_of_transactions = len(transactions.member_transactions)
-                if member_transaction.transaction_type == "Ex":
-                    amount += (member_transaction.amount/number_of_transactions)
-                if member_transaction.transaction_type == "Inc":
-                    amount -= (member_transaction.amount/number_of_transactions)
-            member_payables.append((member.name, -(amount)))
+    # member_payables = []
 
-    # Adding new members
+    user_transactions = Transactions.query.filter_by(user_id=current_user.id).all()
+
+
+    # A dict to store each member payables
+    member_payables = {}
+
+    # Calculating member payables
+    for transaction in user_transactions:
+
+        member_count = len(transaction.member_transactions)
+        
+        for member in transaction.member_transactions:
+
+            if transaction.paid_by != member.id:
+
+                if member.name in member_payables.keys():
+                    member_payables[member.name] += round((transaction.amount/member_count), 2)
+
+                else:
+                    member_payables[member.name] = round((transaction.amount/member_count), 2)
+                    
+            else:
+                
+                number = ((transaction.amount/member_count) * (member_count - 1))
+
+                if member.name in member_payables.keys():
+
+                    member_payables[member.name] += round(-(number), 2)
+                else:
+                    member_payables[member.name] = round(-(number), 2)
+                    
+    # Rendering forms
     form = MembersForm()
     edit_form = MembersEditForm()
 
+    
     if form.validate_on_submit():
 
         #  Store pre-existing members

@@ -34,40 +34,59 @@
         </form>
 
         <!-- Showing existing members -->
-        <div class="card">
-            <div class="card-header text-muted ">
-                Members
-            </div>
+        <div class="card pb-3">
 
-            <div class="card-body">
-                <div class="container">
-                {% if members[0] %}
-                    {% for member in members %}
-                        <!-- Button trigger modal -->
+            <div class="card-header text-muted mb-3"> Members </div>
+                    <!-- Button trigger modal -->
+                    {% if members[0] %}
+                    
+                        <ul class="list-group list-group-flush">
+                            {% for member in members %}
+                                <a href="" class="member-button" data-bs-toggle="modal" data-bs-target="#memberModal" data-id="{{member.id}}">
+                                                            
+                                    <li class="list-group-item mx-3">
+                                    <div class="row">
+                                        <div class="col-8 py-2 fw-bold text-muted text-start">
+                                            {{member.name}}
+                                        </div>
 
-                        <button type="button" class="member-button " data-id="{{member.id}}" style="width:100%; border: none;" data-name="{{member.name}}" data-bs-toggle="modal" data-bs-target="#memberModal" data-name="{{member.name}}" data-id="{{member.id}}">
-                            <div class="row list-group-item d-flex">
-                                <div class="col-6 py-2 text-start">{{member.name}}</div>
-                            
-                                {% for member_payable in member_payables %}
-                                    {% if member_payable[0] == member.name %}
-                                
-                                        {% if member_payable[1] < 0 %}
-                                            <div class="col-6 py-2 text-danger fw-bold text-end">{{ '%0.2f'|format(member_payable[1]|float) }}</div>  
-                                        {% endif %}
-
-                                        {% if member_payable[1] >= 0 %}
-                                            <div class="col-6 py-2 text-success fw-bold text-end">{{ '%0.2f'|format(member_payable[1]|float) }}</div>
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                                </div> 
-                            </button>
-                    {% endfor %}
-                {% else %}
-                        <p class="fs-3 fw-light text-muted text-center my-3">No Members</p>
-                {% endif %}
-
+                                            {% if member.name not in member_payables.keys() %}
+                                                <div class="col-4 py-2 text-start text-success">
+                                                    <span class="fw-bold">$0</span>
+                                                </div>
+                                            
+                                            {% else %}
+                                                {% for key, value in member_payables.items() %}
+                                                    
+                                                    
+                                                    {% if member.name == key %}
+                                                        
+                                                        {% if value < 0 %}
+                                                            <div class="col-4 py-2 text-start text-success">
+                                                                <span class="small pe-1">get back</span>
+                                                                <span class="fw-bold">${{ '%0.2f'|format(-(value)|float) }}</span>
+                                                            </div>
+                                                        
+                                            
+                                                        {% else %}
+                                                            <div class="col-4 py-2 text-start text-danger">
+                                                                <span class="small pe-1">owes</span>
+                                                                <span class="fw-bold">${{ '%0.2f'|format(value|float) }}</span>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
+                                    </div>
+                                    </li>
+                                </a>
+                            {% endfor %}
+                        </ul>
+                    
+                    {% else %}
+                            <p class="fs-3 fw-light text-muted text-center my-3">No Members</p>
+                    {% endif %}
+                    
                 </div>
             </div>
         </div>
@@ -113,7 +132,6 @@
 
                         <!-- Modal Footer -->
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             {{ edit_form.submit(class="form_submit btn btn-primary", id="edit-button") }}
                             </form>
                             <form id="member-delete" action="" method="POST">
@@ -163,7 +181,6 @@
                     fetch(url)
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data);
                         document.querySelector('#FloatingMember').value = data.name;
                     })
                     .catch(error => {
@@ -172,10 +189,10 @@
 
 
                     // Listning to user submit button clicks 
-                    document.querySelector("#edit-button").addEventListener('click', (ev) => {
+                    document.querySelector("#edit-button").addEventListener('click', (event) => {
 
                         // Prevent posting to the default route
-                        ev.preventDefault();
+                        event.preventDefault();
 
                         // New form object
                         let data = new FormData();
