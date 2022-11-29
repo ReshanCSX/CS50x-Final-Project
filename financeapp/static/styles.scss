@@ -248,6 +248,16 @@ header{
     font-size: 3rem;
     font-weight: f_weight(bold);
 }
+
+.list-group-item{
+    background-color: transparent;
+
+    &:hover{
+        background-color: #e7e5e5;
+    }
+}
+
+
 // .transaction_form{
 //     border: 1px solid $accent-color-1;
 //     border-radius: 10px;

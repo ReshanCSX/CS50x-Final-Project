@@ -177,4 +177,11 @@ header .navbar .nav_menu .nav_list .nav_item:hover {
   height: 5rem;
   font-size: 3rem;
   font-weight: 700;
+}
+
+.list-group-item {
+  background-color: transparent;
+}
+.list-group-item:hover {
+  background-color: #e7e5e5;
 }/*# sourceMappingURL=styles.css.map */

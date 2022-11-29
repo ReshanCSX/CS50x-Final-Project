@@ -42,44 +42,46 @@
                     
                         <ul class="list-group list-group-flush">
                             {% for member in members %}
-                                <a href="" class="member-button" data-bs-toggle="modal" data-bs-target="#memberModal" data-id="{{member.id}}">
-                                                            
-                                    <li class="list-group-item mx-3">
-                                    <div class="row">
-                                        <div class="col-8 py-2 fw-bold text-muted text-start">
-                                            {{member.name}}
-                                        </div>
+                                <li class="list-group-item mx-3 border border-bottom-0">
 
-                                            {% if member.name not in member_payables.keys() %}
-                                                <div class="col-4 py-2 text-start text-success">
-                                                    <span class="fw-bold">$0</span>
-                                                </div>
-                                            
-                                            {% else %}
-                                                {% for key, value in member_payables.items() %}
-                                                    
-                                                    
-                                                    {% if member.name == key %}
+                                    <a href="" class="member-button" data-bs-toggle="modal" data-bs-target="#memberModal" data-id="{{member.id}}">
+                                        <div class="row">
+                                            <div class="col-8 py-2 fw-bold text-muted text-start">
+                                                {{member.name}}
+                                            </div>
+
+                                                {% if member.name not in member_payables.keys() %}
+
+                                                    <div class="col-4 py-2 text-start text-success">
+                                                        <span class="fw-bold">$0</span>
+                                                    </div>
+                                                
+                                                {% else %}
+
+                                                    {% for key, value in member_payables.items() %}
                                                         
-                                                        {% if value < 0 %}
-                                                            <div class="col-4 py-2 text-start text-success">
-                                                                <span class="small pe-1">get back</span>
-                                                                <span class="fw-bold">${{ '%0.2f'|format(-(value)|float) }}</span>
-                                                            </div>
-                                                        
-                                            
-                                                        {% else %}
-                                                            <div class="col-4 py-2 text-start text-danger">
-                                                                <span class="small pe-1">owes</span>
-                                                                <span class="fw-bold">${{ '%0.2f'|format(value|float) }}</span>
-                                                            </div>
+                                                        {% if member.name == key %}
+                                                            
+                                                            {% if value < 0 %}
+                                                                <div class="col-4 py-2 text-start text-success">
+                                                                    <span class="small pe-1">get back</span>
+                                                                    <span class="fw-bold">${{ '%0.2f'|format(-(value)|float) }}</span>
+                                                                </div>
+                                                            
+                                                
+                                                            {% else %}
+                                                                <div class="col-4 py-2 text-start text-danger">
+                                                                    <span class="small pe-1">owes</span>
+                                                                    <span class="fw-bold">${{ '%0.2f'|format(value|float) }}</span>
+                                                                </div>
+                                                            {% endif %}
                                                         {% endif %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% endif %}
-                                    </div>
-                                    </li>
-                                </a>
+                                                    {% endfor %}
+                                                {% endif %}
+                                        </div>
+                                    </a>
+
+                                </li>
                             {% endfor %}
                         </ul>
                     
