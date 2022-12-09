@@ -1,9 +1,10 @@
 from datetime import datetime
+from calendar import monthrange
 from werkzeug.datastructures import ImmutableMultiDict
 from flask import redirect, render_template, url_for, flash, request, abort, jsonify
 from financeapp import app, db, Session
 from financeapp.models import User, Account, Transactions, Members
-from sqlalchemy.sql import func, extract, desc  
+from sqlalchemy.sql import func, extract, desc
 from financeapp.forms import RegistrationForm, LoginForm, TransactionForm, TimeForm, MembersForm, MembersEditForm
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_user, current_user, login_required, logout_user
@@ -83,34 +84,102 @@ def home():
     # Setting default value
     form = TimeForm(time=1)
     date = datetime.now().month
-    month = "month"
+    time_period = "month"
 
     # Select time period  
     if form.validate_on_submit():
         if form.time.data == "0":
             date = datetime.now().day
-            month = "day"
+            time_period = "day"
         elif form.time.data == "1":
             date = datetime.now().month
-            month = "month"
+            time_period = "month"
         elif form.time.data == "2":
             date = datetime.now().year
-            month = "year"
+            time_period = "year"
 
+            
     # Return 0 if database query returens None
     def value_return(x):
         if x[0] is None:
             return 0
         else:
             return x[0]
-    
-    income = value_return(db.session.query(func.sum(Transactions.amount).filter(extract(month, Transactions.date)==date, Transactions.transaction_type=="Inc", Transactions.user_id==current_user.id)).first())
-    expense = value_return(db.session.query(func.sum(Transactions.amount).filter(extract(month, Transactions.date)==date, Transactions.transaction_type=="Ex", Transactions.user_id==current_user.id)).first())
+        
+    # DB query for calculating sum
+    def getting_sum(type):
+        sum = value_return(db.session.query(func.sum(Transactions.amount).filter(extract(time_period, Transactions.date)==date, Transactions.transaction_type==str(type), Transactions.user_id==current_user.id)).first())
+        return sum
 
-    balance = income - expense
+    data_overview = {}
+    
+    data_overview['income'] = getting_sum("Inc")
+    data_overview['expense'] = getting_sum("Ex")
+    data_overview['balance'] = data_overview['income'] - data_overview['expense']
+
+    members = Members.query.filter_by(user_id = current_user.id).all()
+    user_transactions = Transactions.query.filter_by(user_id=current_user.id).all()
+
+
+
+    members_data = {}
+
+    for member in members:
+        members_data[member.name] = {}
+        members_data[member.name]['spent'] = 0
+        members_data[member.name]['income'] = 0
+        
+
+        for item in member.trans_members:
+            member_count = len(item.member_transactions)
+            print(item, len(item.member_transactions))
+
+            if item.paid_by == member.id:
+
+                if item.transaction_type == "Inc":  
+                    members_data[member.name]['income'] += item.amount
+
+                if item.transaction_type == "Ex":
+                    members_data[member.name]['spent'] += (item.amount / member_count)
+                    members_data[member.name]['income'] += -(item.amount)
+
+            else:
+                if item.transaction_type == "Ex":
+                    members_data[member.name]['spent'] += (item.amount / member_count)
+                else:    
+                    members_data[member.name]['income'] += (item.amount / member_count)
+            
+            
+
+        members_data[member.name]['balance'] = members_data[member.name]['spent'] + members_data[member.name]['income']
+        print("")
+
+    print(members_data)
+
+            
+            
+
+        # print(member)
+        # print(member.trans_members)
+        # print("")
+
+
+    
+    # Recent Transactions
+    transactions = Transactions.query.filter_by(user_id=current_user.id).order_by(desc(Transactions.date)).limit(5).all()
+
+    trans = {}
+
+    for transaction in transactions:
+        for i in range(5):
+            trans[f'transaction{i}'] = {}
+            trans[f'transaction{i}']['name'] = transaction.transaction_name
+            trans[f'transaction{i}']['date'] = transaction.date
+            trans[f'transaction{i}']['paid'] = transaction.paid_by
+            trans[f'transaction{i}']['amount'] = transaction.amount
 
         
-    return render_template("overview.html", title = "Overview", form = form, income = income, expense = expense, balance = balance, user_transactions = transactions )
+    return render_template("overview.html", title = "Overview", form = form, data_overview = data_overview, members_data = members_data )
 
 @app.route("/transactions", methods=["GET", "POST"])
 @login_required
