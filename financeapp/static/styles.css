@@ -179,9 +179,9 @@ header .navbar .nav_menu .nav_list .nav_item:hover {
   font-weight: 700;
 }
 
-.list-group-item {
+.member-button-wrapper {
   background-color: transparent;
 }
-.list-group-item:hover {
+.member-button-wrapper:hover {
   background-color: #e7e5e5;
 }/*# sourceMappingURL=styles.css.map */
