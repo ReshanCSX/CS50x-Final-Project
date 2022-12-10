@@ -49,6 +49,9 @@ class TransactionForm(FlaskForm):
     members = MultiCheckboxField('Members', coerce=int)
     submit = SubmitField("ADD")
 
+    def validate_members(self, members):
+        if not members.data:
+            raise ValidationError("Selecting at least on member is required.")
             
 class TimeForm(FlaskForm):
     time = SelectField("Time Period", choices=[('0', 'Day'), ('1', 'Month'), ('2', 'Year')])

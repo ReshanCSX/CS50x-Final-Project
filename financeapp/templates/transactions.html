@@ -133,6 +133,14 @@
               </ul>
             </div>
 
+            {% if form.members.errors %}
+              <div class="text-danger pt-2">
+                {% for error in form.members.errors %}
+                    <span><small> {{ error }} </small></span>
+                {% endfor %}
+              </div>
+            {% endif %}
+
             <!-- Date -->
             <div class="row my-3">
               <div class="col">
