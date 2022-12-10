@@ -115,12 +115,12 @@ def home():
     
     data_overview['income'] = getting_sum("Inc")
     data_overview['expense'] = getting_sum("Ex")
-    data_overview['balance'] = data_overview['income'] - data_overview['expense']
+    data_overview['balance'] =  (data_overview['expense']) - (-data_overview['income'])
+
 
     members = Members.query.filter_by(user_id = current_user.id).all()
-    user_transactions = Transactions.query.filter_by(user_id=current_user.id).all()
 
-
+    # Members Data
 
     members_data = {}
 
@@ -132,7 +132,6 @@ def home():
 
         for item in member.trans_members:
             member_count = len(item.member_transactions)
-            print(item, len(item.member_transactions))
 
             if item.paid_by == member.id:
 
@@ -149,34 +148,8 @@ def home():
                 else:    
                     members_data[member.name]['income'] += (item.amount / member_count)
             
-            
 
         members_data[member.name]['balance'] = members_data[member.name]['spent'] + members_data[member.name]['income']
-        print("")
-
-    print(members_data)
-
-            
-            
-
-        # print(member)
-        # print(member.trans_members)
-        # print("")
-
-
-    
-    # Recent Transactions
-    transactions = Transactions.query.filter_by(user_id=current_user.id).order_by(desc(Transactions.date)).limit(5).all()
-
-    trans = {}
-
-    for transaction in transactions:
-        for i in range(5):
-            trans[f'transaction{i}'] = {}
-            trans[f'transaction{i}']['name'] = transaction.transaction_name
-            trans[f'transaction{i}']['date'] = transaction.date
-            trans[f'transaction{i}']['paid'] = transaction.paid_by
-            trans[f'transaction{i}']['amount'] = transaction.amount
 
         
     return render_template("overview.html", title = "Overview", form = form, data_overview = data_overview, members_data = members_data )

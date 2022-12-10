@@ -184,4 +184,9 @@ header .navbar .nav_menu .nav_list .nav_item:hover {
 }
 .member-button-wrapper:hover {
   background-color: #e7e5e5;
+}
+
+.bg-color {
+  background-color: #5B58EC;
+  border: none;
 }/*# sourceMappingURL=styles.css.map */
