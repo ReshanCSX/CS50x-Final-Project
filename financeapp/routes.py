@@ -342,6 +342,10 @@ def delete_member(member_id):
 
     if member.user_id != current_user.id:
         abort(403)
+
+    if member.trans_members:
+        flash("Member cannot be deleted", "warning")
+        return redirect(url_for('members'))
     
     db.session.delete(member)
     db.session.commit()
