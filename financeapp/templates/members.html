@@ -65,14 +65,14 @@
                                                             {% if value < 0 %}
                                                                 <div class="col-4 py-2 text-start text-success">
                                                                     <span class="small pe-1">get back</span>
-                                                                    <span class="fw-bold">${{ '%0.2f'|format(-(value)|float) }}</span>
+                                                                    <span class="fw-bold">{{ value | usd }}</span>
                                                                 </div>
                                                             
                                                 
                                                             {% else %}
                                                                 <div class="col-4 py-2 text-start text-danger">
                                                                     <span class="small pe-1">owes</span>
-                                                                    <span class="fw-bold">${{ '%0.2f'|format(value|float) }}</span>
+                                                                    <span class="fw-bold">{{ value | usd }}</span>
                                                                 </div>
                                                             {% endif %}
                                                         {% endif %}

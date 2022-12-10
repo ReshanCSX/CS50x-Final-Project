@@ -182,10 +182,12 @@
             <td>{{ transaction.transaction_name }}</td>
             {% if transaction.transaction_type == 'Ex' %}
               <td class="text-danger">Expense</td>
+              <td  class="text-danger fw-bold">{{ transaction.amount | usd }}</td>
             {% else %}
               <td class="text-success">Income</td>
+              <td class="text-success  fw-bold">{{ transaction.amount | usd }}</td>
             {% endif %}
-            <td>{{ transaction.amount }} $</td>
+            
             <td>{{ transaction.date }}</td>
             <td class="text-center">
               <a href="{{ url_for('del_transactions',transaction_id=transaction.id) }}" class="btn btn-outline-danger">
