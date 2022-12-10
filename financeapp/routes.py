@@ -347,6 +347,10 @@ def delete_member(member_id):
         flash("Member cannot be deleted", "warning")
         return redirect(url_for('members'))
     
+    if member.name == member.user.username:
+        flash("Member cannot be deleted", "warning")
+        return redirect(url_for('members'))
+    
     db.session.delete(member)
     db.session.commit()
     flash("Member Deleted", "danger")

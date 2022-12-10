@@ -42,7 +42,7 @@
                     
                         <ul class="list-group list-group-flush">
                             {% for member in members %}
-                                <li class="list-group-item mx-3 border border-bottom-0 member-button-wrapper">
+                                <li class="list-group-item mx-3 border member-button-wrapper">
 
                                     <a href="" class="member-button" data-bs-toggle="modal" data-bs-target="#memberModal" data-id="{{member.id}}">
                                         <div class="row">
@@ -53,7 +53,8 @@
                                                 {% if member.name not in member_payables.keys() %}
 
                                                     <div class="col-4 py-2 text-start text-success">
-                                                        <span class="fw-bold">$0</span>
+                                                        <span class="small pe-1">get back</span>
+                                                        <span class="fw-bold">{{ 0 | usd }}</span>
                                                     </div>
                                                 
                                                 {% else %}

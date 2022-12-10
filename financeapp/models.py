@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     account = db.relationship('Account', backref='account_holder', lazy=True)
     transactions = db.relationship('Transactions', backref='transactions', lazy=True)
-    members = db.relationship('Members', backref='members', lazy=True)
+    members = db.relationship('Members', backref='user', lazy=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
