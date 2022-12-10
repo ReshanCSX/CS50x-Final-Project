@@ -172,46 +172,53 @@
     </div>
   </div>
 
-  <div class="table-responsive-md mt-5">
-    <table class="table table-striped mt-3">
-      <thead>
-        <tr>
-          <th>Transaction</th>
-          <th>Type</th>
-          <th>Amount</th>
-          <th>Date and Time</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {% if user_transactions %}
-          {% for transaction in user_transactions %}
-          <tr>
-            <td>{{ transaction.transaction_name }}</td>
-            {% if transaction.transaction_type == 'Ex' %}
-              <td class="text-danger">Expense</td>
-              <td  class="text-danger fw-bold">{{ transaction.amount | usd }}</td>
-            {% else %}
-              <td class="text-success">Income</td>
-              <td class="text-success  fw-bold">{{ transaction.amount | usd }}</td>
-            {% endif %}
-            
-            <td>{{ transaction.date }}</td>
-            <td class="text-center">
-              <a href="{{ url_for('del_transactions',transaction_id=transaction.id) }}" class="btn btn-outline-danger">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-                </svg>
-              </a>
-            </td>
-          </tr>
-          {% endfor %}
-        {% endif %}
-      </tbody>  
-    </table>
-  </div>
+  <!-- Transaction Data -->
+  <div class="row row-cols-1 g-4 mt-1">
+    <div class="col">
+        <div class="card">
+            <div class="card-header bg-color text-white">
+            Transactions
+            </div>
+            <ul class="list-group list-group-flush">
 
+              {% if transaction_list %}
+                {% for transaction_id, transaction_data in transaction_list.items() %}
+                <li class="list-group-item bg-light bg-gradient py-3">
+      
+                  <div class="row d-flex align-items-center">
 
+                      <div class="col">
+                        <div class="row ps-3 text-muted">{{ transaction_data.date }}</div>
+                        <div class="row ps-3 text-muted"><small class="ms-0 ps-0">{{ transaction_data.time }}</small></div>
+                      </div>
+
+                      <div class="col fw-bold text-muted text-start">{{ transaction_data.name}} </div>
+
+                      {% if transaction_data.type == 'Ex' %}
+                        <div class="col text-danger"><span class="small pe-1">Paid by</span><span class="fw-bold">{{ transaction_data.paid }}</span></div>
+                        <div  class="col text-danger fw-bold">{{ transaction_data.amount | usd }}</div>
+                      {% else %}
+                      <div class="col text-success"><span class="small pe-1">Recieved from</span><span class="fw-bold">{{ transaction_data.paid }}</span></div>
+                        <div class="col text-success  fw-bold">{{ transaction_data.amount | usd }}</div>
+                      {% endif %}
+
+                      <div class="col text-end">
+                        <a href="{{ url_for('del_transactions',transaction_id=transaction_data.id ) }}" class="btn btn-outline-danger d-flex mx-auto align-items-center justify-content-around" style="max-width:7rem;">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                          <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+                          </svg>
+                          Delete
+                        </a>
+                      </div>
+                  </div>
+              </li>
+                {% endfor %}
+              {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</div>
 
 </div>
 {% endblock %}

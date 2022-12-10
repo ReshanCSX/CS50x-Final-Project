@@ -158,7 +158,28 @@ def home():
 @login_required
 def transactions():
 
-    user_transactions = Transactions.query.filter_by(user_id=current_user.id).order_by(desc(Transactions.date))
+    user_transactions = Transactions.query.filter_by(user_id=current_user.id).order_by(desc(Transactions.date)).all()
+
+    # Rendering Transactions
+    transaction_list = {}
+
+    def get_paid_member(id):
+        member = Members.query.get_or_404(id)
+        return member.name
+
+    index = 0
+
+    for transaction in user_transactions:
+        transaction_list[index] = {}
+        transaction_list[index]['id'] = transaction.id
+        transaction_list[index]['date'] = transaction.date.date()
+        transaction_list[index]['name'] = transaction.transaction_name
+        transaction_list[index]['time'] = (transaction.date.strftime("%I:%M %p"))
+        transaction_list[index]['type'] = transaction.transaction_type
+        transaction_list[index]['paid'] = get_paid_member(transaction.paid_by)
+        transaction_list[index]['amount'] = transaction.amount
+
+        index += 1
     
     # Render members list 
     members = Members.query.filter_by(user_id=current_user.id).all()
@@ -215,7 +236,7 @@ def transactions():
         return redirect(url_for("transactions"))
 
 
-    return render_template("transactions.html", title="Transactions", form = form, user_transactions = user_transactions)
+    return render_template("transactions.html", title="Transactions", form = form, transaction_list = transaction_list)
 
 
 # Deleting records  route
