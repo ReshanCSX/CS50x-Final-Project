@@ -35,7 +35,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title display-6 text-center text-success fw-bold">${{ -(data_overview.income)|int }}</h3>
+                        <h3 class="card-title display-6 text-center text-success fw-bold">{{ data_overview.income | usd }}</h3>
                         <h5 class="card-text text-center text-success fw-bold"><small>Total recieved</small></h5>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title  display-6 text-center text-danger fw-bold">${{ (data_overview.expense)|int }}</h3>
+                        <h3 class="card-title  display-6 text-center text-danger fw-bold">{{ data_overview.expense | usd }}</h3>
                         <h5 class="card-text text-center text-danger fw-bold"><small>Total spending</small></h5>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title  display-6 text-center text-warning fw-bold">${{ -(data_overview.balance)|int }}</h3>
+                        <h3 class="card-title  display-6 text-center text-warning fw-bold">{{ data_overview.balance | usd }}</h3>
                         <h5 class="card-text text-center text-warning fw-bold"><small>Balance</small></h5>
                     </div>
                 </div>
@@ -70,12 +70,12 @@
                     </div>
                     <ul class="list-group list-group-flush">
 
-                        <li class="list-group-item py-3">
+                        <li class="list-group-item bg-light bg-gradient py-3">
                             <div class="row">
-                                <div class="col text-start"></div>
-                                <div class="col text-end fw-bold text-danger">Spent</div>
-                                <div class="col text-end fw-bold text-success">Paid</div>
-                                <div class="col text-end fw-bold d-grid align-items-center">Balance</div>
+                                <div class="col text-start">Name </div>
+                                <div class="col text-end">Spent</div>
+                                <div class="col text-end">Paid</div>
+                                <div class="col text-end">Balance</div>
                             </div>
                         </li>
 
@@ -84,13 +84,13 @@
                         
                             <li class="list-group-item py-3">
                                 <div class="row">
-                                    <div class="col text-start fw-bold">{{member}}</div>
-                                    <div class="col text-end text-danger fw-bold">${{ '%0.2f'|format(member_data.spent|float) }} </div>
-                                    <div class="col text-end text-success fw-bold">${{'%0.2f'|format(-(member_data.income)|float) }}</div>
+                                    <div class="col text-start">{{member}}</div>
+                                    <div class="col text-end text-danger">{{ member_data.spent | usd }} </div>
+                                    <div class="col text-end text-success">{{ member_data.income | usd }}</div>
                                     {% if member_data.balance >= 0 %}
-                                        <div class="col text-end text-danger fw-bold d-grid align-items-center">${{'%0.2f'| format(member_data.balance|float) }}</div>
+                                        <div class="col text-end text-danger">{{ member_data.balance | usd }}</div>
                                     {% else %}
-                                        <div class="col text-end text-success fw-bold d-grid align-items-center">${{'%0.2f'| format(-(member_data.balance)|float) }}</div>
+                                        <div class="col text-end text-success">{{ member_data.balance | usd }}</div>
                                     {% endif %}
                                 </div>
                             </li>
