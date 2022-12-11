@@ -59,21 +59,21 @@
                                                 
                                                 {% else %}
 
-                                                    {% for key, value in member_payables.items() %}
+                                                    {% for name, payable in member_payables.items() %}
                                                         
-                                                        {% if member.name == key %}
+                                                        {% if member.name == name %}
                                                             
-                                                            {% if value < 0 %}
+                                                            {% if payable.balance < 0 %}
                                                                 <div class="col-4 py-2 text-start text-success">
                                                                     <span class="small pe-1">get back</span>
-                                                                    <span class="fw-bold">{{ value | usd }}</span>
+                                                                    <span class="fw-bold">{{ payable.balance | usd }}</span>
                                                                 </div>
                                                             
                                                 
                                                             {% else %}
                                                                 <div class="col-4 py-2 text-start text-danger">
                                                                     <span class="small pe-1">owes</span>
-                                                                    <span class="fw-bold">{{ value | usd }}</span>
+                                                                    <span class="fw-bold">{{ payable.balance | usd }}</span>
                                                                 </div>
                                                             {% endif %}
                                                         {% endif %}
