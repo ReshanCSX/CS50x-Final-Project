@@ -8,6 +8,8 @@ from sqlalchemy.sql import func, extract, desc
 from financeapp.forms import RegistrationForm, LoginForm, TransactionForm, TimeForm, MembersForm, MembersEditForm
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_user, current_user, login_required, logout_user
+from financeapp.helpers import member_spending
+
 
 @app.route("/")
 def index():
@@ -81,6 +83,8 @@ def logout():
 @login_required
 def home():
 
+    print(member_spending(current_user.id, detailed = True))
+
     # Setting default value
     form = TimeForm(time=1)
     date = datetime.now().month
@@ -120,37 +124,8 @@ def home():
 
     members = Members.query.filter_by(user_id = current_user.id).all()
 
-    # Members Data
-
-    members_data = {}
-
-    for member in members:
-        members_data[member.name] = {}
-        members_data[member.name]['spent'] = 0
-        members_data[member.name]['income'] = 0
-        
-
-        for item in member.trans_members:
-            member_count = len(item.member_transactions)
-
-            if item.paid_by == member.id:
-
-                if item.transaction_type == "Inc":  
-                    members_data[member.name]['income'] += item.amount
-
-                if item.transaction_type == "Ex":
-                    members_data[member.name]['spent'] += (item.amount / member_count)
-                    members_data[member.name]['income'] += -(item.amount)
-
-            else:
-                if item.transaction_type == "Ex":
-                    members_data[member.name]['spent'] += (item.amount / member_count)
-                else:    
-                    members_data[member.name]['income'] += (item.amount / member_count)
-            
-
-        members_data[member.name]['balance'] = members_data[member.name]['spent'] + members_data[member.name]['income']
-
+    # Rendering Members Spending
+    members_data = member_spending(current_user.id, detailed = True)
         
     return render_template("overview.html", title = "Overview", form = form, data_overview = data_overview, members_data = members_data )
 
