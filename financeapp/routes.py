@@ -242,34 +242,34 @@ def members():
 
     user_transactions = Transactions.query.filter_by(user_id=current_user.id).all()
 
-
+    print(member_spending(current_user.id, detailed = False))
     # A dict to store each member payables
-    member_payables = {}
+    member_payables = member_spending(current_user.id, detailed = False)
 
     # Calculating member payables
-    for transaction in user_transactions:
+    # for transaction in user_transactions:
 
-        member_count = len(transaction.member_transactions)
+    #     member_count = len(transaction.member_transactions)
         
-        for member in transaction.member_transactions:
+    #     for member in transaction.member_transactions:
 
-            if transaction.paid_by != member.id:
+    #         if transaction.paid_by != member.id:
 
-                if member.name in member_payables.keys():
-                    member_payables[member.name] += round((transaction.amount/member_count), 2)
+    #             if member.name in member_payables.keys():
+    #                 member_payables[member.name] += round((transaction.amount/member_count), 2)
 
-                else:
-                    member_payables[member.name] = round((transaction.amount/member_count), 2)
+    #             else:
+    #                 member_payables[member.name] = round((transaction.amount/member_count), 2)
                     
-            else:
+    #         else:
                 
-                number = ((transaction.amount/member_count) * (member_count - 1))
+    #             number = ((transaction.amount/member_count) * (member_count - 1))
 
-                if member.name in member_payables.keys():
+    #             if member.name in member_payables.keys():
 
-                    member_payables[member.name] += round(-(number), 2)
-                else:
-                    member_payables[member.name] = round(-(number), 2)
+    #                 member_payables[member.name] += round(-(number), 2)
+    #             else:
+    #                 member_payables[member.name] = round(-(number), 2)
                     
     # Rendering forms
     form = MembersForm()
