@@ -75,6 +75,7 @@
                                 <div class="col text-start">Name </div>
                                 <div class="col text-end">Spent</div>
                                 <div class="col text-end">Paid</div>
+                                <div class="col text-end">Recieved</div>
                                 <div class="col text-end">Balance</div>
                             </div>
                         </li>
@@ -87,6 +88,7 @@
                                     <div class="col text-start">{{member}}</div>
                                     <div class="col text-end text-danger">{{ member_data.spent | usd }} </div>
                                     <div class="col text-end text-success">{{ member_data.income | usd }}</div>
+                                    <div class="col text-end text-success">{{ member_data.recieved | usd }}</div>
                                     {% if member_data.balance >= 0 %}
                                         <div class="col text-end text-danger">{{ member_data.balance | usd }}</div>
                                     {% else %}

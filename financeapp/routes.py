@@ -83,8 +83,6 @@ def logout():
 @login_required
 def home():
 
-    print(member_spending(current_user.id, detailed = True))
-
     # Setting default value
     form = TimeForm(time=1)
     date = datetime.now().month
@@ -242,7 +240,6 @@ def members():
 
     user_transactions = Transactions.query.filter_by(user_id=current_user.id).all()
 
-    print(member_spending(current_user.id, detailed = False))
     # A dict to store each member payables
     member_payables = member_spending(current_user.id, detailed = False)
 

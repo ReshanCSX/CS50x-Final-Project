@@ -39,7 +39,7 @@ class TransactionForm(FlaskForm):
     # CURRENCY_CHOICES = [(currency, " - ".join([currency, get_currency_name(currency)])) for currency in list_currencies()] 
 
 
-    type = SelectField('Transaction type', choices=[('Ex', ' Expense'), ('Inc', 'Income')], validators=[DataRequired()] )
+    type = SelectField('Transaction type', choices=[('Ex', ' Expense'), ('Inc', 'Settle')], validators=[DataRequired()] )
     # currencies = SelectField('Currency', choices=CURRENCY_CHOICES)
     # category = SelectField('Expense Category', choices=[('1', 'Food'), ('2', 'Utility')])
     paid_by = SelectField('Paid by', validators=[DataRequired()])
