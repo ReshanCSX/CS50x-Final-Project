@@ -78,6 +78,5 @@ def member_spending(current_user, detailed):
                     
             
         members_data[member.name]['balance'] = member_spent + (member_income - member_recieved)
-        print(member_spent, member_income, member_recieved)
     
     return members_data
