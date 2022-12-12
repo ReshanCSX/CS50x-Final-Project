@@ -32,15 +32,7 @@
         
        <!-- cards -->
         <div class="row row-cols-1 row-cols-md-3 g-4 mt-1">
-            <div class="col">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title display-6 text-center text-success fw-bold">{{ data_overview.income | usd }}</h3>
-                        <h5 class="card-text text-center text-success fw-bold"><small>Total recieved</small></h5>
-                    </div>
-                </div>
-            </div>
-
+            
             <div class="col">
                 <div class="card">
                     <div class="card-body">
@@ -53,8 +45,17 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <h3 class="card-title  display-6 text-center text-warning fw-bold">{{ data_overview.balance | usd }}</h3>
-                        <h5 class="card-text text-center text-warning fw-bold"><small>Balance</small></h5>
+                        <h3 class="card-title display-6 text-center text-primary fw-bold">{{ data_overview.transactions_count }}</h3>
+                        <h5 class="card-text text-center text-primary fw-bold"><small>Transactions</small></h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title  display-6 text-center text-success fw-bold">{{ data_overview.members_count }}</h3>
+                        <h5 class="card-text text-center text-success fw-bold"><small>Members</small></h5>
                     </div>
                 </div>
             </div>

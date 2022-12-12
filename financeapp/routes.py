@@ -113,14 +113,15 @@ def home():
         sum = value_return(db.session.query(func.sum(Transactions.amount).filter(extract(time_period, Transactions.date)==date, Transactions.transaction_type==str(type), Transactions.user_id==current_user.id)).first())
         return sum
 
+    members_count = Members.query.filter_by(user_id = current_user.id).count()
+    transactions_count = Transactions.query.filter_by(user_id = current_user.id).count()
+
     data_overview = {}
     
-    data_overview['income'] = getting_sum("Inc")
     data_overview['expense'] = getting_sum("Ex")
-    data_overview['balance'] =  (data_overview['expense']) - (-data_overview['income'])
+    data_overview['members_count'] = members_count
+    data_overview['transactions_count'] =  transactions_count
 
-
-    members = Members.query.filter_by(user_id = current_user.id).all()
 
     # Rendering Members Spending
     members_data = member_spending(current_user.id, detailed = True)
