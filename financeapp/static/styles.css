@@ -189,4 +189,11 @@ header .navbar .nav_menu .nav_list .nav_item:hover {
 .bg-color {
   background-color: #5B58EC;
   border: none;
+}
+
+@media screen and (min-width: 768px) {
+  .scroll {
+    height: 18rem;
+    overflow-y: auto;
+  }
 }/*# sourceMappingURL=styles.css.map */

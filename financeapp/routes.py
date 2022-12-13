@@ -124,9 +124,27 @@ def home():
 
 
     # Rendering Members Spending
-    members_data = member_spending(current_user.id, detailed = True)
+    members_data = member_spending(current_user.id, detailed = False)
+
+    # Rendering Transactions
+    user_transactions = Transactions.query.filter_by(user_id=current_user.id).order_by(desc(Transactions.date)).limit(5).all()
+
+    transactions_data = {}
+    index = 0
+
+    for transaction in user_transactions:
+        transactions_data[index] = {}
+        transactions_data[index]['date'] = transaction.date.strftime('%b-%d')
+        transactions_data[index]['time'] = (transaction.date.strftime("%I:%M %p"))
+        transactions_data[index]['type'] = transaction.transaction_type
+        transactions_data[index]['name'] = transaction.transaction_name
+        transactions_data[index]['amount'] = transaction.amount
+
+        index += 1
+
+    print(transactions_data)
         
-    return render_template("overview.html", title = "Overview", form = form, data_overview = data_overview, members_data = members_data )
+    return render_template("overview.html", title = "Overview", form = form, data_overview = data_overview, members_data = members_data, transactions_data = transactions_data)
 
 @app.route("/transactions", methods=["GET", "POST"])
 @login_required
