@@ -143,8 +143,6 @@ def home():
         transactions_data[index]['amount'] = transaction.amount
 
         index += 1
-
-    print(transactions_data)
         
     return render_template("overview.html", title = "Overview", form = form, data_overview = data_overview, members_data = members_data, transactions_data = transactions_data)
 
@@ -256,7 +254,6 @@ def members():
 
     user_members = Members.query.filter_by(user_id=current_user.id).all()
     
-    
     # member_payables = []
     user_transactions = Transactions.query.filter_by(user_id=current_user.id).all()
 
@@ -282,7 +279,6 @@ def members():
         else:
             flash("Member Already Exists", "danger")
 
-    print(member_payables)
     return render_template("members.html", form = form, edit_form = edit_form, members = user_members, member_payables = member_payables)
 
 @app.route("/members/update/<int:member_id>", methods=["GET", "POST"])
@@ -293,6 +289,12 @@ def update_member(member_id):
     member_details = Members.query.get_or_404(member_id)    
     
     if request.method == "POST":
+
+        if member_details.user_id != current_user.id:
+            abort(403)
+
+        if member_details.name == current_user.username:
+            abort(403)
         
         req = request.get_json()
         form_input = ImmutableMultiDict(req)
@@ -311,9 +313,7 @@ def update_member(member_id):
         
         else:
             return jsonify(edit_form.errors)
-        
-    if member_details.user_id != current_user.id:
-        abort(403)
+    
         
     return jsonify({'name': member_details.name})
 
