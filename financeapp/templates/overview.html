@@ -79,7 +79,7 @@
                             <li class="list-group-item border-bottom py-3">
                                 <div class="row">
                                     <div class="col text-start">{{member}}</div>
-                                    {% if member_data.balance >= 0 %}
+                                    {% if member_data.balance > 0 %}
                                         <div class="col text-end text-danger"><small>owes</small><span class="fw-bold ps-2">{{ member_data.balance | usd }}</span></div>
                                     {% else %}
                                         <div class="col text-end text-success"><small>get back</small><span class="fw-bold ps-2">{{ member_data.balance | usd }}</span></div>
