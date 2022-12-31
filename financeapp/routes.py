@@ -16,7 +16,7 @@ def index():
     if current_user.is_authenticated:
         return redirect(url_for("home"))
 
-    return render_template("index.html")
+    return redirect(url_for("login"))
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -115,6 +115,8 @@ def home():
 
     members_count = Members.query.filter_by(user_id = current_user.id).count()
     transactions_count = Transactions.query.filter_by(user_id = current_user.id).count()
+
+    # TO DO - Transaction_count according to the form
 
     data_overview = {}
     
@@ -262,32 +264,6 @@ def members():
     # A dict to store each member payables
     member_payables = member_spending(current_user.id, detailed = False)
 
-    # Calculating member payables
-    # for transaction in user_transactions:
-
-    #     member_count = len(transaction.member_transactions)
-        
-    #     for member in transaction.member_transactions:
-
-    #         if transaction.paid_by != member.id:
-
-    #             if member.name in member_payables.keys():
-    #                 member_payables[member.name] += round((transaction.amount/member_count), 2)
-
-    #             else:
-    #                 member_payables[member.name] = round((transaction.amount/member_count), 2)
-                    
-    #         else:
-                
-    #             number = ((transaction.amount/member_count) * (member_count - 1))
-
-    #             if member.name in member_payables.keys():
-
-    #                 member_payables[member.name] += round(-(number), 2)
-    #             else:
-    #                 member_payables[member.name] = round(-(number), 2)
-                    
-    # Rendering forms
     form = MembersForm()
     edit_form = MembersEditForm()
 
@@ -341,8 +317,6 @@ def update_member(member_id):
         abort(403)
         
     return jsonify({'name': member_details.name})
-
-
 
 
 @app.route("/members/delete/<int:member_id>", methods=["POST"])
