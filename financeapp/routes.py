@@ -258,7 +258,6 @@ def members():
     
     
     # member_payables = []
-
     user_transactions = Transactions.query.filter_by(user_id=current_user.id).all()
 
     # A dict to store each member payables
@@ -283,7 +282,7 @@ def members():
         else:
             flash("Member Already Exists", "danger")
 
-
+    print(member_payables)
     return render_template("members.html", form = form, edit_form = edit_form, members = user_members, member_payables = member_payables)
 
 @app.route("/members/update/<int:member_id>", methods=["GET", "POST"])

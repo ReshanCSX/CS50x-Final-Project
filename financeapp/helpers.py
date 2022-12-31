@@ -1,12 +1,13 @@
 from financeapp.models import Members
+from math import floor
 
 def usd(value):
     """Format value as USD."""
 
     if value < 0:
-        return f"${-(value):,.2f}"
+        return f"${floor(-(value)):,.2f}"
 
-    return f"${value:,.2f}"
+    return f"${floor(value):,.2f}"
 
 
 def member_spending(current_user, detailed):
@@ -46,7 +47,7 @@ def member_spending(current_user, detailed):
 
 
         for member in members_data.keys():
-            members_data[member]['balance'] = members_data[member]['spent'] + (members_data[member]['income'] - members_data[member]['recieved'])
+            members_data[member]['balance'] = floor(members_data[member]['spent'] + (members_data[member]['income'] - members_data[member]['recieved']))
            
         return members_data
             
@@ -77,6 +78,6 @@ def member_spending(current_user, detailed):
                     members_data[members[(item.paid_by - 1)].name]['balance'] += (item.amount)
                     
             
-        members_data[member.name]['balance'] = member_spent + (member_income - member_recieved)
+        members_data[member.name]['balance'] = floor(member_spent + (member_income - member_recieved))
     
     return members_data
