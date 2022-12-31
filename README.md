@@ -18,7 +18,8 @@ In addition to tracking individual expenses, this application also provides a co
 
 
 ## Technologies:
-This web application was developed unsing 
+This web application was developed using :
+  
 <ul>
   <li>Flask with python</li>
   <li>SQLAlchemy with SQLite3</li>
