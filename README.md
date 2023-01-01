@@ -1,7 +1,7 @@
 # CS50x - 2022
 ## SPLIT - Manage and track group finances
 
-#### Video Demo:  <URL HERE>
+#### Video Demo:  https://youtu.be/pNyFlQejgnw
 
 ## Description: 
 
